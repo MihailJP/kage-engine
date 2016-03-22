@@ -272,7 +272,7 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
     case 0:
       break;
     case 1:
-      if(a3 == 4){
+      if(a3 % 100 == 4){
         if(x1 == x2){
           if(y1 < y2){ v = 1; } else{ v = -1; }
           tx1 = x2;
@@ -298,7 +298,7 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
       break;
     case 2:
     case 12:
-      if(a3 == 4){
+      if(a3 % 100 == 4){
         if(x2 == x3){
           tx1 = x3;
           ty1 = y3 - kage.kMage;
@@ -316,7 +316,7 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
         cdDrawCurve(kage, polygons, x1, y1, x2, y2, tx1, ty1, a2, 1);
         cdDrawCurve(kage, polygons, tx1, ty1, x3, y3, x3 - kage.kMage * 2, y3 - kage.kMage * 0.5, 1, 0);
       }
-      else if(a3 == 5){
+      else if(a3 % 100 == 5){
         tx1 = x3 + kage.kMage;
         ty1 = y3;
         tx2 = tx1 + kage.kMage * 0.5;
@@ -329,7 +329,7 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
       }
       break;
     case 3:
-      if(a3 == 5){
+      if(a3 % 100 == 5){
         if(x1 == x2){
           if(y1 < y2){ v = 1; } else{ v = -1; }
           tx1 = x2;
@@ -412,7 +412,7 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
       }
       break;
     case 6:
-      if(a3 == 5){
+      if(a3 % 100 == 5){
         tx1 = x4 - kage.kMage;
         ty1 = y4;
         tx2 = x4 + kage.kMage * 0.5;
