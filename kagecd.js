@@ -6,7 +6,7 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
   var delta;
   var deltad;
   var XX, XY, YX, YY;
-  var poly, poly2;
+  var poly, poly2, poly3;
   var hosomi;
   var kMinWidthT, kMinWidthT2;
   var a1, a2, opt1, opt2, opt3, opt4;
@@ -725,7 +725,11 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
     
     poly = new Polygon();
     poly2 = new Polygon();
+    poly3 = new Polygon();
     
+    opt1 = 0;
+    if ((a1 == 0) && (x1 > x2) && (y1 < y2)) {opt1 = 1;}
+    else if ((a1 == 0) && (x1 < x2) && (y1 > y2)) {opt1 = 2;}
     for(tt = 0; tt <= 1000; tt = tt + kage.kRate){
       t = tt / 1000;
       
@@ -788,11 +792,37 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
       //save to polygon
       poly.push(x - ia, y - ib);
       poly2.push(x + ia, y + ib);
+      
+      if (opt1 == 1) {
+        if (tt == 0) {
+            poly3.push(x + ia, y + ib);
+            poly3.push(x - ia * 1.5, y - ib * 1.5);
+        } else if (tt == 30) {
+            poly3.push(x - ia * 1.5, y - ib * 1.5);
+        } else if (tt == 100) {
+            poly3.push(x - ia, y - ib);
+        }
+        if (tt < Math.ceil(100 / kage.kRate) * kage.kRate) {tt -= kage.kRate - 10;}
+      }
+      else if (opt1 == 2) {
+        if (tt == 0) {
+            poly3.push(x - ia, y - ib);
+            poly3.push(x + ia * 1.5, y + ib * 1.5);
+        } else if (tt == 30) {
+            poly3.push(x + ia * 1.5, y + ib * 1.5);
+        } else if (tt == 100) {
+            poly3.push(x + ia, y + ib);
+        }
+        if (tt < Math.ceil(100 / kage.kRate) * kage.kRate) {tt -= kage.kRate - 10;}
+      }
     }
     
     poly2.reverse();
     poly.concat(poly2);
     polygons.push(poly);
+    if (opt1 != 0) {
+        polygons.push(poly3);
+    }
   }
 }
 
