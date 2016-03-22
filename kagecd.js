@@ -1245,7 +1245,13 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
       poly.push(x1 - kage.kWidth, y1);
       poly.push(x2 - kage.kWidth, y2);
       poly.push(x2 + kage.kWidth, y2);
-      poly.push(x1 + kage.kWidth, y1);
+      if (a1 % 100 == 0) {
+        poly.push(x1 + kage.kWidth, y1 + kage.kWidth * 2);
+        poly.push(x1 + kage.kWidth * 1.5, y1 + kage.kWidth * 0.75);
+        poly.push(x1 + kage.kWidth * 1.5, y1 + kage.kWidth * 0.25);
+      } else {
+        poly.push(x1 + kage.kWidth, y1);
+      }
       //poly.reverse(); // for fill-rule
       
       polygons.push(poly);
