@@ -321,7 +321,8 @@ function Kage(size){
           if ((x1 > x3) && (y1 < y3)) { // down-left stroke
             for(var k = 0; k < strokesArray.length; k++){ // each target stroke
               if (i == k) {continue;}
-              if ((x3 == strokesArray[k][3]) && (y3 == strokesArray[k][4])) {
+              if (Math.hypot(x3 - strokesArray[k][3], y3 - strokesArray[k][4]) <= 4) {
+                strokesArray[i][7 + (strokesArray[i][0] == 2 ? 0 : 2)] = strokesArray[k][3] - this.kWidth;
                 continue strokeLoop;
               }
               switch (strokesArray[k][0]) {
