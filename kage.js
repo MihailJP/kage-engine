@@ -8,7 +8,7 @@ function Kage(size){
   
   function makeGlyph2(polygons, data){ // void
       if(data != ""){
-	  var strokesArray = this.adjustKirikuchi(this.adjustUroko2(this.adjustUroko(this.adjustKakato(this.adjustTate(this.adjustMage(this.adjustHane(this.getEachStrokes(data))))))));
+	  var strokesArray = this.adjustDownLeft(this.adjustKirikuchi(this.adjustUroko2(this.adjustUroko(this.adjustKakato(this.adjustTate(this.adjustMage(this.adjustHane(this.getEachStrokes(data)))))))));
 	  for(var i = 0; i < strokesArray.length; i++){
 	      dfDrawFont(this, polygons,
 			 strokesArray[i][0],
@@ -306,6 +306,63 @@ function Kage(size){
     return strokesArray;
   }
   Kage.prototype.adjustKakato = adjustKakato;
+  
+  function adjustDownLeft(strokesArray){ // strokesArray
+    if (this.kShotai == this.kGothic) {
+      var x1, x2, x3, y1, y2, y3;
+      var xx1, xx2, yy1, yy2, lines;
+      strokeLoop: for(var i = 0; i < strokesArray.length; i++){
+        if (((strokesArray[i][0] == 2) || (strokesArray[i][0] == 6) || (strokesArray[i][0] == 7)) && (strokesArray[i][2] == 7)) {
+          x1 = strokesArray[i][3]; y1 = strokesArray[i][4];
+          x2 = strokesArray[i][5 + (strokesArray[i][0] == 2 ? 0 : 2)];
+          y2 = strokesArray[i][6 + (strokesArray[i][0] == 2 ? 0 : 2)];
+          x3 = strokesArray[i][7 + (strokesArray[i][0] == 2 ? 0 : 2)];
+          y3 = strokesArray[i][8 + (strokesArray[i][0] == 2 ? 0 : 2)];
+          if ((x1 > x3) && (y1 < y3)) { // down-left stroke
+            for(var k = 0; k < strokesArray.length; k++){ // each target stroke
+              if (i == k) {continue;}
+              if ((x3 == strokesArray[k][3]) && (y3 == strokesArray[k][4])) {
+                continue strokeLoop;
+              }
+              switch (strokesArray[k][0]) {
+                case 1:                 lines = 1; break;
+                case 2: case 3: case 4: lines = 2; break;
+                case 6: case 7:         lines = 3; break;
+                default:                lines = 0; break;
+              }
+              for (var j = 0; j < lines; j++) {
+                xx1 = strokesArray[k][3 + j * 2]; yy1 = strokesArray[k][4 + j * 2];
+                xx2 = strokesArray[k][5 + j * 2]; yy2 = strokesArray[k][6 + j * 2];
+                if (xx1 != xx2) { // horizontal or diagonal target line
+                  if ((strokesArray[k][3] < strokesArray[k][3 + lines * 2]) && (strokesArray[k][4] > strokesArray[k][4 + lines * 2]) && (strokesArray[k][2] == 7) && ((strokesArray[k][0] == 2) || (strokesArray[k][0] == 6))) { // up-right stroke
+                    var a = (yy2 - yy1) / (xx2 - xx1);
+                    var b = yy1 - xx1 * a;
+                    if ((x3 >= Math.min(xx1, xx2)) && (x3 <= Math.max(xx1, xx2))) {
+                      if ((y3 >= (a * x3 + b - 5)) && (y3 <= (a * x3 + b + 5))) {
+                        continue strokeLoop;
+                      }
+                    }
+                  }
+                } else { // vertical target line
+                  if ((y3 >= Math.min(yy1, yy2)) && (y3 <= Math.max(yy1, yy2))) {
+                    if ((x3 >= xx1 - 5) && (x3 <= xx1 + 5)) {
+                      strokesArray[i][7 + (strokesArray[i][0] == 2 ? 0 : 2)] = (x3 * 9 + x2) / 10.;
+                      strokesArray[i][8 + (strokesArray[i][0] == 2 ? 0 : 2)] = (y3 * 9 + y2) / 10.;
+                      continue strokeLoop;
+                    }
+                  }
+                }
+              }
+            }
+            strokesArray[i][7 + (strokesArray[i][0] == 2 ? 0 : 2)] = (x3 * 4 + x2) / 5.;
+            strokesArray[i][8 + (strokesArray[i][0] == 2 ? 0 : 2)] = (y3 * 4 + y2) / 5.;
+          }
+        }
+      }
+    }
+    return strokesArray;
+  }
+  Kage.prototype.adjustDownLeft = adjustDownLeft;
   
   function getBox(glyph){ // minX, minY, maxX, maxY
       var a = new Object();
