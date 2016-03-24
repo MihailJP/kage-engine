@@ -8,7 +8,7 @@ function Kage(size){
   
   function makeGlyph2(polygons, data){ // void
       if(data != ""){
-	  var strokesArray = this.adjustDownLeft(this.adjustKirikuchi(this.adjustUroko2(this.adjustUroko(this.adjustKakato(this.adjustTate(this.adjustMage(this.adjustHane(this.getEachStrokes(data)))))))));
+	  var strokesArray = this.adjustYoko(this.adjustDownLeft(this.adjustKirikuchi(this.adjustUroko2(this.adjustUroko(this.adjustKakato(this.adjustTate(this.adjustMage(this.adjustHane(this.getEachStrokes(data))))))))));
 	  for(var i = 0; i < strokesArray.length; i++){
 	      dfDrawFont(this, polygons,
 			 strokesArray[i][0],
@@ -364,6 +364,27 @@ function Kage(size){
     return strokesArray;
   }
   Kage.prototype.adjustDownLeft = adjustDownLeft;
+  
+  function adjustYoko(strokesArray){ // strokesArray
+    if (this.kShotai == this.kGothic) {
+      for(var i = 0; i < strokesArray.length; i++){
+        if((strokesArray[i][0] == 1) && strokesArray[i][4] == strokesArray[i][6]){
+          for(var j = 0; j < strokesArray.length; j++){
+            if(i != j && (strokesArray[j][0] == 1) && strokesArray[j][4] == strokesArray[j][6] &&
+              !(strokesArray[i][3] + 1 > strokesArray[j][5] || strokesArray[i][5] - 1 < strokesArray[j][3]) &&
+              Math.abs(strokesArray[i][4] - strokesArray[j][4]) < this.kWidth * this.kAdjustTateStep * 1.25){
+              strokesArray[i][1] += (this.kAdjustTateStep - Math.floor(Math.abs(strokesArray[i][4] - strokesArray[j][4]) / this.kWidth / 1.25)) * 100000;
+              if(strokesArray[i][1] > this.kAdjustTateStep * 100000){
+                strokesArray[i][1] = strokesArray[i][1] % 100000 + this.kAdjustTateStep * 100000;
+              }
+            }
+          }
+        }
+      }
+    }
+    return strokesArray;
+  }
+  Kage.prototype.adjustYoko = adjustYoko;
   
   function getBox(glyph){ // minX, minY, maxX, maxY
       var a = new Object();
