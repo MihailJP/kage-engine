@@ -1273,17 +1273,20 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
         x2 = tx1;
         y2 = ty1;
         a1 = ta2 % 100;
-        a2 = ta1;
+        a2 = ta1 % 1000;
       }
       else{
         x1 = tx1;
         y1 = ty1;
         x2 = tx2;
         y2 = ty2;
-        a1 = ta1;
+        a1 = ta1 % 1000;
         a2 = ta2 % 100;
       }
+      opt1 = Math.floor(ta1 / 1000);
       opt2 = Math.floor(ta2 / 100);
+      kWidth = kage.kWidth - opt1 / 2;
+      if (kWidth < kage.kMinWidthY) {kWidth = kage.kMinWidthY;}
       
       if(a1 % 10 == 2){
         if (a1 % 100 == 22){ y1 = y1 - kage.kWidth * 1.25; }
@@ -1295,15 +1298,15 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
       if(a2 % 10 == 3){ y2 = y2 + kage.kWidth + kage.kWidth * (kage.kKakato - 1) * ((kage.kAdjustKakatoStep - opt2) / (kage.kAdjustKakatoStep + 1)); }
       
       poly = new Polygon();
-      poly.push(x1 - kage.kWidth, y1);
-      poly.push(x2 - kage.kWidth, y2);
-      poly.push(x2 + kage.kWidth, y2);
+      poly.push(x1 - kWidth, y1);
+      poly.push(x2 - kWidth, y2);
+      poly.push(x2 + kWidth, y2);
       if ((a1 % 100 == 0) || (a1 % 100 == 22)) {
-        poly.push(x1 + kage.kWidth, y1 + kage.kWidth * 2);
-        poly.push(x1 + kage.kWidth * 1.5, y1 + kage.kWidth * 0.75);
-        poly.push(x1 + kage.kWidth * 1.5, y1 + kage.kWidth * 0.25);
+        poly.push(x1 + kWidth, y1 + kage.kWidth * 2);
+        poly.push(x1 + kWidth * 1.5, y1 + kage.kWidth * 0.75);
+        poly.push(x1 + kWidth * 1.5, y1 + kage.kWidth * 0.25);
       } else {
-        poly.push(x1 + kage.kWidth, y1);
+        poly.push(x1 + kWidth, y1);
       }
       //poly.reverse(); // for fill-rule
       
