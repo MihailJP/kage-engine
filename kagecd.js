@@ -858,6 +858,7 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
   var XX, XY, YX, YY;
   var poly;
   var kMinWidthT;
+  var kWidth;
   
   if(kage.kShotai == kage.kMincho){ //mincho
     x1 = tx1;
@@ -1271,7 +1272,7 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
         y1 = ty2;
         x2 = tx1;
         y2 = ty1;
-        a1 = ta2;
+        a1 = ta2 % 100;
         a2 = ta1;
       }
       else{
@@ -1280,8 +1281,9 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
         x2 = tx2;
         y2 = ty2;
         a1 = ta1;
-        a2 = ta2;
+        a2 = ta2 % 100;
       }
+      opt2 = Math.floor(ta2 / 100);
       
       if(a1 % 10 == 2){
         if (a1 % 100 == 22){ y1 = y1 - kage.kWidth * 1.25; }
@@ -1290,7 +1292,7 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
       }
       if(a2 % 10 == 2){ y2 = y2 + kage.kWidth / 2; }
       if(a1 % 10 == 3){ y1 = y1 - kage.kWidth * kage.kKakato; }
-      if(a2 % 10 == 3){ y2 = y2 + kage.kWidth * kage.kKakato; }
+      if(a2 % 10 == 3){ y2 = y2 + kage.kWidth + kage.kWidth * (kage.kKakato - 1) * ((kage.kAdjustKakatoStep - opt2) / (kage.kAdjustKakatoStep + 1)); }
       
       poly = new Polygon();
       poly.push(x1 - kage.kWidth, y1);
@@ -1314,26 +1316,29 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
         x2 = tx1;
         y2 = ty1;
         a1 = ta2;
-        a2 = ta1;
+        a2 = ta1 % 100000;
       }
       else{
         x1 = tx1;
         y1 = ty1;
         x2 = tx2;
         y2 = ty2;
-        a1 = ta1;
+        a1 = ta1 % 100000;
         a2 = ta2;
       }
+      opt1 = Math.floor(ta1 / 100000);
+      kWidth = kage.kWidth - opt1 / 2;
+      if (kWidth < kage.kMinWidthY) {kWidth = kage.kMinWidthY;}
       if(a1 % 10 == 2){ x1 = x1 - kage.kWidth / 2; }
       if(a2 % 10 == 2){ x2 = x2 + kage.kWidth / 2; }
       if(a1 % 10 == 3){ x1 = x1 - kage.kWidth * kage.kKakato; }
       if(a2 % 10 == 3){ x2 = x2 + kage.kWidth * kage.kKakato; }
       
       poly = new Polygon();
-      poly.push(x1, y1 - kage.kWidth);
-      poly.push(x2, y2 - kage.kWidth);
-      poly.push(x2, y2 + kage.kWidth);
-      poly.push(x1, y1 + kage.kWidth);
+      poly.push(x1, y1 - kWidth);
+      poly.push(x2, y2 - kWidth);
+      poly.push(x2, y2 + kWidth);
+      poly.push(x1, y1 + kWidth);
       
       polygons.push(poly);
     }
