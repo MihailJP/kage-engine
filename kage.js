@@ -327,8 +327,8 @@ function Kage(size){
               }
               switch (strokesArray[k][0]) {
                 case 1:                 lines = 1; break;
-                case 2: case 3: case 4: lines = 2; break;
-                case 6: case 7:         lines = 3; break;
+                case 2: case 3:         lines = 2; break;
+                case 4: case 6: case 7: lines = 3; break;
                 default:                lines = 0; break;
               }
               for (var j = 0; j < lines; j++) {
