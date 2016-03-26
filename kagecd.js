@@ -730,6 +730,7 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
     opt1 = 0;
     if ((a1 == 0) && (x1 > x2) && (y1 < y2)) {opt1 = 1;}
     else if ((a1 == 0) && (x1 < x2) && (y1 > y2)) {opt1 = 2;}
+    else if ((a1 == 0) && (x1 < x2) && (y1 < y2)) {opt1 = 1;}
     else if (((a1 % 100 == 22) || (a1 % 100 == 27)) && (y1 < y2)) {
         opt1 = 1;
         if((x1 != sx1) && (y1 != sy1)){
