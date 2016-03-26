@@ -500,7 +500,25 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
       }
       break;
     case 6:
-      if(a3 % 100 == 5){
+      if(a3 % 100 == 4){
+        if(x3 == x4){
+          tx1 = x4;
+          ty1 = y4 - kage.kMage;
+        }
+        else if(y3 == y4){
+          tx1 = x4 - kage.kMage;
+          ty1 = y4;
+        }
+        else{
+          rad = Math.atan((y4 - y3) / (x4 - x3));
+          if(x3 < x4){ v = 1; } else{ v = -1; }
+          tx1 = x4 - kage.kMage * Math.cos(rad) * v;
+          ty1 = y4 - kage.kMage * Math.sin(rad) * v;
+        }
+        cdDrawBezier(kage, polygons, x1, y1, x2, y2, x3, y3, tx1, ty1, a2, 1);
+        cdDrawCurve(kage, polygons, tx1, ty1, x4, y4, x4 - kage.kMage * 2, y4 - kage.kMage * 0.5, 1, 0);
+      }
+      else if(a3 % 100 == 5){
         tx1 = x4 - kage.kMage;
         ty1 = y4;
         tx2 = x4 + kage.kMage * 0.5;
