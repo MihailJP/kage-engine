@@ -815,23 +815,23 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
         if (tt == 0) {
             poly3.push(x + ia, y + ib);
             poly3.push(x - ia * 1.5, y - ib * 1.5);
-        } else if (tt == 30) {
+        } else if (tt == Math.min(30, Math.ceil(150 / Math.hypot(x2 - x1, y2 - x1)) * 5)) {
             poly3.push(x - ia * 1.5, y - ib * 1.5);
-        } else if (tt == 100) {
+        } else if (tt == Math.min(100, Math.ceil(500 / Math.hypot(x2 - x1, y2 - x1)) * 5)) {
             poly3.push(x - ia, y - ib);
         }
-        if (tt < Math.ceil(100 / kage.kRate) * kage.kRate) {tt -= kage.kRate - 10;}
+        if (tt < Math.ceil(100 / kage.kRate) * kage.kRate) {tt -= kage.kRate - 5;}
       }
       else if (opt1 == 2) {
         if (tt == 0) {
             poly3.push(x - ia, y - ib);
             poly3.push(x + ia * 1.5, y + ib * 1.5);
-        } else if (tt == 30) {
+        } else if (tt == Math.min(30, Math.ceil(150 / Math.hypot(x2 - x1, y2 - x1)) * 5)) {
             poly3.push(x + ia * 1.5, y + ib * 1.5);
-        } else if (tt == 100) {
+        } else if (tt == Math.min(100, Math.ceil(500 / Math.hypot(x2 - x1, y2 - x1)) * 5)) {
             poly3.push(x + ia, y + ib);
         }
-        if (tt < Math.ceil(100 / kage.kRate) * kage.kRate) {tt -= kage.kRate - 10;}
+        if (tt < Math.ceil(100 / kage.kRate) * kage.kRate) {tt -= kage.kRate - 5;}
       }
     }
     
