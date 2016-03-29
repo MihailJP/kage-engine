@@ -1386,20 +1386,20 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
       
       //SUICHOKU NO ICHI ZURASHI HA Math.sin TO Math.cos NO IREKAE + x-axis MAINASU KA
       poly = new Polygon();
-      poly.push(x1 + Math.sin(rad) * kage.kWidth, y1 - Math.cos(rad) * kage.kWidth);
-      poly.push(x2 + Math.sin(rad) * kage.kWidth, y2 - Math.cos(rad) * kage.kWidth);
+      poly.push(x1 + Math.sin(rad) * kWidth, y1 - Math.cos(rad) * kWidth);
+      poly.push(x2 + Math.sin(rad) * kWidth, y2 - Math.cos(rad) * kWidth);
       if ((y1 > y2) && ((a1 % 100 == 0) || (a1 % 100 == 22))) {
-        poly.push(x2 - Math.sin(rad) * kage.kWidth * 1.5,
-                  y2 + Math.cos(rad) * kage.kWidth * 1.5);
-        poly.push(x2 - Math.sin(rad) * kage.kWidth * 1.5 - Math.cos(rad) * kage.kWidth * 0.25,
-                  y2 + Math.cos(rad) * kage.kWidth * 1.5 - Math.sin(rad) * kage.kWidth * 0.25);
-        poly.push(x2 - Math.sin(rad) * kage.kWidth - Math.cos(rad) * kage.kWidth * 0.75,
-                  y2 + Math.cos(rad) * kage.kWidth - Math.sin(rad) * kage.kWidth * 0.75);
-        poly.push(x2 - Math.sin(rad) * kage.kWidth, y2 + Math.cos(rad) * kage.kWidth);
+        poly.push(x2 - Math.sin(rad) * kWidth * 1.5,
+                  y2 + Math.cos(rad) * kWidth * 1.5);
+        poly.push(x2 - Math.sin(rad) * kWidth * 1.5 - Math.cos(rad) * kWidth * 0.25,
+                  y2 + Math.cos(rad) * kWidth * 1.5 - Math.sin(rad) * kWidth * 0.25);
+        poly.push(x2 - Math.sin(rad) * kWidth - Math.cos(rad) * kWidth * 0.75,
+                  y2 + Math.cos(rad) * kWidth - Math.sin(rad) * kWidth * 0.75);
+        poly.push(x2 - Math.sin(rad) * kWidth, y2 + Math.cos(rad) * kWidth);
       } else {
-        poly.push(x2 - Math.sin(rad) * kage.kWidth, y2 + Math.cos(rad) * kage.kWidth);
+        poly.push(x2 - Math.sin(rad) * kWidth, y2 + Math.cos(rad) * kWidth);
       }
-      poly.push(x1 - Math.sin(rad) * kage.kWidth, y1 + Math.cos(rad) * kage.kWidth);
+      poly.push(x1 - Math.sin(rad) * kWidth, y1 + Math.cos(rad) * kWidth);
       
       polygons.push(poly);
     }
