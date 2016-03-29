@@ -650,81 +650,82 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
     if (kWidth < kage.kMinWidthY) {kWidth = kage.kMinWidthY;}
     
     if((a1 % 10 == 2)||(a1 % 100 == 27)){
+      var adjustFactor = (a1 % 100 == 22) ? 1.25 : (a1 % 100 == 12) ? 1 : 0.5;
       if(x1 == sx1){
-        if(y1 < sy1){ y1 = y1 - kWidth / 2; } else{ y1 = y1 + kWidth / 2; }
+        if(y1 < sy1){ y1 = y1 - kage.kWidth * adjustFactor; } else{ y1 = y1 + kage.kWidth * adjustFactor; }
       }
       else if(y1 == sy1){
-        if(x1 < sx1){ x1 = x1 - kWidth / 2; } else{ x1 = x1 + kWidth / 2; }
+        if(x1 < sx1){ x1 = x1 - kage.kWidth * adjustFactor; } else{ x1 = x1 + kage.kWidth * adjustFactor; }
       }
       else{
         rad = Math.atan((sy1 - y1) / (sx1 - x1));
         if(x1 < sx1){ v = 1; } else{ v = -1; }
-        x1 = x1 - kWidth * Math.cos(rad) * v / 2;
-        y1 = y1 - kWidth * Math.sin(rad) * v / 2;
+        x1 = x1 - kage.kWidth * Math.cos(rad) * v * adjustFactor;
+        y1 = y1 - kage.kWidth * Math.sin(rad) * v * adjustFactor;
       }
     }
     
     if(a1 % 10 == 3){
       if(x1 == sx1){
         if(y1 < sy1){
-          y1 = y1 - kWidth * kage.kKakato;
+          y1 = y1 - kage.kWidth * kage.kKakato;
         }
         else{
-          y1 = y1 + kWidth * kage.kKakato;
+          y1 = y1 + kage.kWidth * kage.kKakato;
         }
       }
       else if(y1 == sy1){
         if(x1 < sx1){
-          x1 = x1 - kWidth * kage.kKakato;
+          x1 = x1 - kage.kWidth * kage.kKakato;
         }
         else{
-          x1 = x1 + kWidth * kage.kKakato;
+          x1 = x1 + kage.kWidth * kage.kKakato;
         }
       }
       else{
         rad = Math.atan((sy1 - y1) / (sx1 - x1));
         if(x1 < sx1){ v = 1; } else{ v = -1; }
-        x1 = x1 - kWidth * Math.cos(rad) * v * kage.kKakato;
-        y1 = y1 - kWidth * Math.sin(rad) * v * kage.kKakato;
+        x1 = x1 - kage.kWidth * Math.cos(rad) * v * kage.kKakato;
+        y1 = y1 - kage.kWidth * Math.sin(rad) * v * kage.kKakato;
       }
     }
     if(a2 % 10 == 2){
       if(sx2 == x2){
-        if(sy2 < y2){ y2 = y2 + kWidth / 2; } else{ y2 = y2 - kWidth / 2; }
+        if(sy2 < y2){ y2 = y2 + kage.kWidth / 2; } else{ y2 = y2 - kage.kWidth / 2; }
       }
       else if(sy2 == y2){
-        if(sx2 < x2){ x2 = x2 + kWidth / 2; } else{ x2 = x2 - kWidth / 2; }
+        if(sx2 < x2){ x2 = x2 + kage.kWidth / 2; } else{ x2 = x2 - kage.kWidth / 2; }
       }
       else{
         rad = Math.atan((y2 - sy2) / (x2 - sx2));
         if(sx2 < x2){ v = 1; } else{ v = -1; }
-        x2 = x2 + kWidth * Math.cos(rad) * v / 2;
-        y2 = y2 + kWidth * Math.sin(rad) * v / 2;
+        x2 = x2 + kage.kWidth * Math.cos(rad) * v / 2;
+        y2 = y2 + kage.kWidth * Math.sin(rad) * v / 2;
       }
     }
     
     if(a2 % 10 == 3){
       if(sx2 == x2){
         if(sy2 < y2){
-          y2 = y2 + kWidth * kage.kKakato;
+          y2 = y2 + kage.kWidth * kage.kKakato;
         }
         else{
-          y2 = y2 - kWidth * kage.kKakato;
+          y2 = y2 - kage.kWidth * kage.kKakato;
         }
       }
       else if(sy2 == y2){
         if(sx2 < x2){
-          x2 = x2 + kWidth * kage.kKakato;
+          x2 = x2 + kage.kWidth * kage.kKakato;
         }
         else{
-          x2 = x2 - kWidth * kage.kKakato;
+          x2 = x2 - kage.kWidth * kage.kKakato;
         }
       }
       else{
         rad = Math.atan((y2 - sy2) / (x2 - sx2));
         if(sx2 < x2){ v = 1; } else{ v = -1; }
-        x2 = x2 + kWidth * Math.cos(rad) * v * kage.kKakato;
-        y2 = y2 + kWidth * Math.sin(rad) * v * kage.kKakato;
+        x2 = x2 + kage.kWidth * Math.cos(rad) * v * kage.kKakato;
+        y2 = y2 + kage.kWidth * Math.sin(rad) * v * kage.kKakato;
       }
     }
     
