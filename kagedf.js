@@ -290,7 +290,7 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
           ty1 = y2 - kage.kMage * Math.sin(rad) * v;
         }
         cdDrawLine(kage, polygons, x1, y1, tx1, ty1, a2, 1);
-        cdDrawCurve(kage, polygons, tx1, ty1, x2, y2, x2 - kage.kMage * 2, y2 - kage.kMage * 0.5, 1, 0);
+        cdDrawCurve(kage, polygons, tx1, ty1, x2, y2, x2 - kage.kMage * 2, y2 - kage.kMage * 0.5, a2 - a2 % 1000 + 1, 0);
       }
       else{
         cdDrawLine(kage, polygons, x1, y1, x2, y2, a2, a3);
@@ -314,15 +314,15 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
           ty1 = y3 - kage.kMage * Math.sin(rad) * v;
         }
         cdDrawCurve(kage, polygons, x1, y1, x2, y2, tx1, ty1, a2, 1);
-        cdDrawCurve(kage, polygons, tx1, ty1, x3, y3, x3 - kage.kMage * 2, y3 - kage.kMage * 0.5, 1, 0);
+        cdDrawCurve(kage, polygons, tx1, ty1, x3, y3, x3 - kage.kMage * 2, y3 - kage.kMage * 0.5, a2 - a2 % 1000 + 1, 0);
       }
       else if(a3 % 100 == 5){
-        tx1 = x3 - kage.kMage;
+        tx1 = x3 - (kage.kMage - Math.floor(a3 / 1000));
         ty1 = y3;
-        tx2 = x3 + kage.kMage * 0.5;
-        ty2 = y3 - kage.kMage * 2;
+        tx2 = x3 + (kage.kMage - Math.floor(a3 / 1000)) * 0.5;
+        ty2 = y3 - (kage.kMage - Math.floor(a3 / 1000)) * 2;
         cdDrawCurve(kage, polygons, x1, y1, x2, y2, tx1, ty1, a2, 1);
-        cdDrawCurve(kage, polygons, tx1, ty1, x3, y3, tx2, ty2, 1, 0);
+        cdDrawCurve(kage, polygons, tx1, ty1, x3, y3, tx2, ty2, a2 - a2 % 1000 + 1, 0);
       }
       else{
         cdDrawCurve(kage, polygons, x1, y1, x2, y2, x3, y3, a2, a3);
@@ -362,15 +362,15 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
           tx2 = x2 + kage.kMage * Math.cos(rad) * v;
           ty2 = y2 + kage.kMage * Math.sin(rad) * v;
         }
-        tx3 = x3 - kage.kMage;
+        tx3 = x3 - (kage.kMage - Math.floor(a3 / 1000));
         ty3 = y3;
-        tx4 = x3 + kage.kMage * 0.5;
-        ty4 = y3 - kage.kMage * 2;
+        tx4 = x3 + (kage.kMage - Math.floor(a3 / 1000)) * 0.5;
+        ty4 = y3 - (kage.kMage - Math.floor(a3 / 1000)) * 2;
         
         cdDrawLine(kage, polygons, x1, y1, tx1, ty1, a2, 1);
-        cdDrawCurve(kage, polygons, tx1, ty1, x2, y2, tx2, ty2, 1, 1);
-        cdDrawLine(kage, polygons, tx2, ty2, tx3, ty3, 1, 1);
-        cdDrawCurve(kage, polygons, tx3, ty3, x3, y3, tx4, ty4, 1, 0);
+        cdDrawCurve(kage, polygons, tx1, ty1, x2, y2, tx2, ty2, a2 - a2 % 1000 + 1, 1);
+        cdDrawLine(kage, polygons, tx2, ty2, tx3, ty3, a2 - a2 % 1000 + 1, 1);
+        cdDrawCurve(kage, polygons, tx3, ty3, x3, y3, tx4, ty4, a2 - a2 % 1000 + 1, 0);
       }
       else{
         if(x1 == x2){
@@ -449,10 +449,10 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
           tx2 = x2 + kage.kMage * Math.cos(rad) * v * rate;
           ty2 = y2 + kage.kMage * Math.sin(rad) * v * rate;
         }
-        tx3 = x3 - kage.kMage;
+        tx3 = x3 - (kage.kMage - Math.floor(a3 / 1000));
         ty3 = y3;
-        tx4 = x3 + kage.kMage * 0.5;
-        ty4 = y3 - kage.kMage * 2;
+        tx4 = x3 + (kage.kMage - Math.floor(a3 / 1000)) * 0.5;
+        ty4 = y3 - (kage.kMage - Math.floor(a3 / 1000)) * 2;
         
         cdDrawLine(kage, polygons, x1, y1, tx1, ty1, a2, 1);
         cdDrawCurve(kage, polygons, tx1, ty1, x2, y2, tx2, ty2, 1, 1);
@@ -519,16 +519,17 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
         cdDrawCurve(kage, polygons, tx1, ty1, x4, y4, x4 - kage.kMage * 2, y4 - kage.kMage * 0.5, 1, 0);
       }
       else if(a3 % 100 == 5){
-        tx1 = x4 - kage.kMage;
+        tx1 = x4 - (kage.kMage - Math.floor(a3 / 1000));
         ty1 = y4;
-        tx2 = x4 + kage.kMage * 0.5;
-        ty2 = y4 - kage.kMage * 2;
+        tx2 = x4 + (kage.kMage - Math.floor(a3 / 1000)) * 0.5;
+        ty2 = y4 - (kage.kMage - Math.floor(a3 / 1000)) * 2;
+
         /*
 				cdDrawCurve(x1, y1, x2, y2, (x2 + x3) / 2, (y2 + y3) / 2, a2, 1);
 				cdDrawCurve((x2 + x3) / 2, (y2 + y3) / 2, x3, y3, tx1, ty1, 1, 1);
          */
         cdDrawBezier(kage, polygons, x1, y1, x2, y2, x3, y3, tx1, ty1, a2, 1);
-        cdDrawCurve(kage, polygons, tx1, ty1, x4, y4, tx2, ty2, 1, 0);
+        cdDrawCurve(kage, polygons, tx1, ty1, x4, y4, tx2, ty2, a2 - a2 % 1000 + 1, 0);
       }
       else{
         /*
@@ -540,7 +541,7 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
       break;
     case 7:
       cdDrawLine(kage, polygons, x1, y1, x2, y2, a2, 1);
-      cdDrawCurve(kage, polygons, x2, y2, x3, y3, x4, y4, 1, a3);
+      cdDrawCurve(kage, polygons, x2, y2, x3, y3, x4, y4, a2 - a2 % 1000 + 1, a3);
       break;
     case 9: // may not be exist
       //kageCanvas[y1][x1] = 0;
