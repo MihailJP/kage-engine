@@ -8,7 +8,7 @@ function Kage(size){
   
   function makeGlyph2(polygons, data){ // void
       if(data != ""){
-	  var strokesArray = this.adjustYoko(this.adjustDownLeft(this.adjustKirikuchi(this.adjustUroko2(this.adjustUroko(this.adjustKakato(this.adjustTate(this.adjustMage(this.adjustHane(this.getEachStrokes(data))))))))));
+	  var strokesArray = this.adjustInclusion(this.adjustYoko(this.adjustDownLeft(this.adjustKirikuchi(this.adjustUroko2(this.adjustUroko(this.adjustKakato(this.adjustTate(this.adjustMage(this.adjustHane(this.getEachStrokes(data)))))))))));
 	  for(var i = 0; i < strokesArray.length; i++){
 	      dfDrawFont(this, polygons,
 			 strokesArray[i][0],
@@ -385,6 +385,70 @@ function Kage(size){
     return strokesArray;
   }
   Kage.prototype.adjustYoko = adjustYoko;
+  
+  function adjustInclusion(strokesArray){ // strokesArray
+    var boxes = new Array();
+    for(var i = 0; i < strokesArray.length; i++){
+      if((strokesArray[i][0] == 1) && (strokesArray[i][3] == strokesArray[i][5])){
+        for(var j = i + 1; j < strokesArray.length; j++){
+          if((strokesArray[j][0] == 1) && (strokesArray[j][3] == strokesArray[j][5])){
+            if (Math.abs(strokesArray[i][3] - strokesArray[j][3]) <= 100) {
+              var tmpArray = [
+                Math.min(strokesArray[i][3], strokesArray[j][3]),
+                Math.max(strokesArray[i][4], strokesArray[j][4]),
+                Math.max(strokesArray[i][5], strokesArray[j][5]),
+                Math.min(strokesArray[i][6], strokesArray[j][6])];
+              if ((tmpArray[0] < tmpArray[2]) && (tmpArray[1] < tmpArray[3])) {
+                boxes.push([
+                  Math.min(strokesArray[i][3], strokesArray[j][3]),
+                  Math.min(strokesArray[i][4], strokesArray[j][4]),
+                  Math.max(strokesArray[i][5], strokesArray[j][5]),
+                  Math.max(strokesArray[i][6], strokesArray[j][6])]);
+              }
+            }
+          }
+        }
+      }
+      if((strokesArray[i][0] == 1) && (strokesArray[i][4] == strokesArray[i][6])){
+        for(var j = i + 1; j < strokesArray.length; j++){
+          if((strokesArray[j][0] == 1) && (strokesArray[j][4] == strokesArray[j][6])){
+            if (Math.abs(strokesArray[i][4] - strokesArray[j][4]) <= 100) {
+              var tmpArray = [
+                Math.max(strokesArray[i][3], strokesArray[j][3]),
+                Math.min(strokesArray[i][4], strokesArray[j][4]),
+                Math.min(strokesArray[i][5], strokesArray[j][5]),
+                Math.max(strokesArray[i][6], strokesArray[j][6])];
+              if ((tmpArray[0] < tmpArray[2]) && (tmpArray[1] < tmpArray[3])) {
+                boxes.push([
+                  Math.min(strokesArray[i][3], strokesArray[j][3]),
+                  Math.min(strokesArray[i][4], strokesArray[j][4]),
+                  Math.max(strokesArray[i][5], strokesArray[j][5]),
+                  Math.max(strokesArray[i][6], strokesArray[j][6])]);
+              }
+            }
+          }
+        }
+      }
+    }
+    for(var i = 0; i < strokesArray.length; i++){
+      if(strokesArray[i][0] == 2) {
+        for(var j = 0; j < boxes.length; j++){
+          if((strokesArray[i][3] >= boxes[j][0]) && (strokesArray[i][4] >= boxes[j][1]) && (strokesArray[i][3] <= boxes[j][2]) && (strokesArray[i][4] <= boxes[j][3])) {
+            if((strokesArray[i][5] >= boxes[j][0]) && (strokesArray[i][6] >= boxes[j][1]) && (strokesArray[i][5] <= boxes[j][2]) && (strokesArray[i][6] <= boxes[j][3])) {
+              if((strokesArray[i][7] >= boxes[j][0]) && (strokesArray[i][8] >= boxes[j][1]) && (strokesArray[i][7] <= boxes[j][2]) && (strokesArray[i][8] <= boxes[j][3])) {
+                strokesArray[i][1] = Math.max(strokesArray[i][1], strokesArray[i][1] % 1000 + (this.kAdjustTateStep - Math.floor((Math.min(boxes[j][3] - boxes[j][1], boxes[j][2] - boxes[j][0]) - 25) / 100 * this.kAdjustTateStep)) * 1000);
+                if(strokesArray[i][1] > this.kAdjustTateStep * 1000){
+                  strokesArray[i][1] = strokesArray[i][1] % 1000 + this.kAdjustTateStep * 1000;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return strokesArray;
+  }
+  Kage.prototype.adjustInclusion = adjustInclusion;
   
   function getBox(glyph){ // minX, minY, maxX, maxY
       var a = new Object();
