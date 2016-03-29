@@ -373,9 +373,9 @@ function Kage(size){
             if(i != j && (strokesArray[j][0] == 1) && strokesArray[j][4] == strokesArray[j][6] &&
               !(strokesArray[i][3] + 1 > strokesArray[j][5] || strokesArray[i][5] - 1 < strokesArray[j][3]) &&
               Math.abs(strokesArray[i][4] - strokesArray[j][4]) < this.kWidth * this.kAdjustTateStep * 1.25){
-              strokesArray[i][1] += (this.kAdjustTateStep - Math.floor(Math.abs(strokesArray[i][4] - strokesArray[j][4]) / this.kWidth / 1.25)) * 100000;
-              if(strokesArray[i][1] > this.kAdjustTateStep * 100000){
-                strokesArray[i][1] = strokesArray[i][1] % 100000 + this.kAdjustTateStep * 100000;
+              strokesArray[i][1] += (this.kAdjustTateStep - Math.floor(Math.abs(strokesArray[i][4] - strokesArray[j][4]) / this.kWidth / 1.25)) * 1000;
+              if(strokesArray[i][1] > this.kAdjustTateStep * 1000){
+                strokesArray[i][1] = strokesArray[i][1] % 1000 + this.kAdjustTateStep * 1000;
               }
             }
           }
