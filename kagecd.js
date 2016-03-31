@@ -15,9 +15,9 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
   if(kage.kShotai == kage.kMincho){ // mincho
     a1 = ta1 % 1000;
     a2 = ta2 % 100;
-    opt1 = Math.floor((ta1 % 10000) / 1000);
+    opt1 = Math.floor((ta1 % 100000) / 1000);
     opt2 = Math.floor((ta2 % 1000) / 100);
-    opt3 = Math.floor(ta1 / 10000);
+    opt3 = Math.floor(ta1 / 100000);
     opt4 = Math.floor(ta2 / 1000);
     
     kMinWidthT = kage.kMinWidthT - opt1 / 2;
@@ -645,7 +645,7 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
   else{ //gothic
     a1 = ta1 % 1000;
     a2 = ta2 % 100;
-    opt1 = Math.floor((ta1 % 10000) / 1000);
+    opt1 = Math.floor((ta1 % 100000) / 1000);
     kWidth = kage.kWidth - opt1 / 2;
     if (kWidth < kage.kMinWidthY) {kWidth = kage.kMinWidthY;}
     
