@@ -814,8 +814,13 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
       }
       
       //save to polygon
-      poly.push(x - ia, y - ib);
-      poly2.push(x + ia, y + ib);
+      if ((a1 == 132) || ((a1 == 22) && (y1 > y2))) {
+        poly.push(x - ia, Math.max(y1, y - ib));
+        poly2.push(x + ia, Math.max(y1, y + ib));
+      } else {
+        poly.push(x - ia, y - ib);
+        poly2.push(x + ia, y + ib);
+      }
       
       if (opt3 == 1) {
         if (tt == 0) {
