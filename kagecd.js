@@ -1369,37 +1369,35 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
       }
       rad = Math.atan((y2 - y1) / (x2 - x1));
       if(a1 % 10 == 2){
-        x1 = x1 - kage.kWidth * Math.cos(rad) / 2;
-        y1 = y1 - kage.kWidth * Math.sin(rad) / 2;
+        x1 = x1 - kWidth * Math.cos(rad);
+        y1 = y1 - kWidth * Math.sin(rad);
       }
       if(a2 % 10 == 2){
-        x2 = x2 + kage.kWidth * Math.cos(rad) / 2;
-        y2 = y2 + kage.kWidth * Math.sin(rad) / 2;
+        x2 = x2 + kWidth * Math.cos(rad);
+        y2 = y2 + kWidth * Math.sin(rad);
       }
       if(a1 % 10 == 3){
-        x1 = x1 - kage.kWidth * Math.cos(rad) * kage.kKakato;
-        y1 = y1 - kage.kWidth * Math.sin(rad) * kage.kKakato;
+        x1 = x1 - kWidth * Math.cos(rad) * kage.kKakato;
+        y1 = y1 - kWidth * Math.sin(rad) * kage.kKakato;
       }
       if(a2 % 10 == 3){
-        x2 = x2 + kage.kWidth * Math.cos(rad) * kage.kKakato;
-        y2 = y2 + kage.kWidth * Math.sin(rad) * kage.kKakato;
+        x2 = x2 + kWidth * Math.cos(rad) * kage.kKakato;
+        y2 = y2 + kWidth * Math.sin(rad) * kage.kKakato;
       }
       
       //SUICHOKU NO ICHI ZURASHI HA Math.sin TO Math.cos NO IREKAE + x-axis MAINASU KA
       poly = new Polygon();
       poly.push(x1 + Math.sin(rad) * kWidth, y1 - Math.cos(rad) * kWidth);
       poly.push(x2 + Math.sin(rad) * kWidth, y2 - Math.cos(rad) * kWidth);
-      if ((y1 > y2) && ((a1 % 100 == 0) || (a1 % 100 == 22))) {
+      if ((y1 > y2) && ((ta1 % 100 == 0) || (ta1 % 100 == 22))) {
         poly.push(x2 - Math.sin(rad) * kWidth * 1.5,
                   y2 + Math.cos(rad) * kWidth * 1.5);
         poly.push(x2 - Math.sin(rad) * kWidth * 1.5 - Math.cos(rad) * kWidth * 0.25,
                   y2 + Math.cos(rad) * kWidth * 1.5 - Math.sin(rad) * kWidth * 0.25);
         poly.push(x2 - Math.sin(rad) * kWidth - Math.cos(rad) * kWidth * 0.75,
                   y2 + Math.cos(rad) * kWidth - Math.sin(rad) * kWidth * 0.75);
-        poly.push(x2 - Math.sin(rad) * kWidth, y2 + Math.cos(rad) * kWidth);
-      } else {
-        poly.push(x2 - Math.sin(rad) * kWidth, y2 + Math.cos(rad) * kWidth);
       }
+      poly.push(x2 - Math.sin(rad) * kWidth, y2 + Math.cos(rad) * kWidth);
       poly.push(x1 - Math.sin(rad) * kWidth, y1 + Math.cos(rad) * kWidth);
       
       polygons.push(poly);
