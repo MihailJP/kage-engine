@@ -650,18 +650,17 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
     if (kWidth < kage.kMinWidthY) {kWidth = kage.kMinWidthY;}
     
     if((a1 % 10 == 2)||(a1 % 100 == 27)){
-      var adjustFactor = (a1 % 100 == 22) ? 1.25 : (a1 % 100 == 12) ? 1 : 0.5;
       if(x1 == sx1){
-        if(y1 < sy1){ y1 = y1 - kage.kWidth * adjustFactor; } else{ y1 = y1 + kage.kWidth * adjustFactor; }
+        if(y1 < sy1){ y1 = y1 - kWidth / 2; } else{ y1 = y1 + kWidth / 2; }
       }
       else if(y1 == sy1){
-        if(x1 < sx1){ x1 = x1 - kage.kWidth * adjustFactor; } else{ x1 = x1 + kage.kWidth * adjustFactor; }
+        if(x1 < sx1){ x1 = x1 - kWidth / 2; } else{ x1 = x1 + kWidth / 2; }
       }
       else{
         rad = Math.atan((sy1 - y1) / (sx1 - x1));
         if(x1 < sx1){ v = 1; } else{ v = -1; }
-        x1 = x1 - kage.kWidth * Math.cos(rad) * v * adjustFactor;
-        y1 = y1 - kage.kWidth * Math.sin(rad) * v * adjustFactor;
+        x1 = x1 - kWidth * Math.cos(rad) * v / 2;
+        y1 = y1 - kWidth * Math.sin(rad) * v / 2;
       }
     }
     
@@ -1301,12 +1300,8 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
         a2 = ta2 % 100;
       }
       
-      if(a1 % 10 == 2){
-        if (a1 % 100 == 22){ y1 = y1 - kage.kWidth * 1.25; }
-        else if (a1 % 100 == 12){ y1 = y1 - kage.kWidth; }
-        else{ y1 = y1 - kage.kWidth / 2; }
-      }
-      if(a2 % 10 == 2){ y2 = y2 + kage.kWidth / 2; }
+      if(a1 % 10 == 2){ y1 = y1 - kage.kWidth; }
+      if(a2 % 10 == 2){ y2 = y2 + kage.kWidth; }
       if(a1 % 10 == 3){ y1 = y1 - kage.kWidth * kage.kKakato; }
       if(a2 % 10 == 3){ y2 = y2 + kage.kWidth + kage.kWidth * (kage.kKakato - 1) * ((kage.kAdjustKakatoStep - opt2) / (kage.kAdjustKakatoStep + 1)); }
       
