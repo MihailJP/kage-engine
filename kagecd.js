@@ -1300,8 +1300,8 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
         a2 = ta2 % 100;
       }
       
-      if(a1 % 10 == 2){ y1 = y1 - kage.kWidth; }
-      if(a2 % 10 == 2){ y2 = y2 + kage.kWidth; }
+      if((a1 % 10 == 2) && !((a1 % 100 == 32) || ((a1 % 100 == 22) && (y1 > y2)))){ y1 = y1 - kage.kWidth; }
+      if((a2 % 10 == 2) && !((a2 % 100 == 32) || ((a2 % 100 == 22) && (y1 > y2)))){ y2 = y2 + kage.kWidth; }
       if(a1 % 10 == 3){ y1 = y1 - kage.kWidth * kage.kKakato; }
       if(a2 % 10 == 3){ y2 = y2 + kage.kWidth + kage.kWidth * (kage.kKakato - 1) * ((kage.kAdjustKakatoStep - opt2) / (kage.kAdjustKakatoStep + 1)); }
       
