@@ -344,19 +344,11 @@ function Kage(size){
                       }
                     }
                   }
-                } else { // vertical target line
-                  if ((y3 >= Math.min(yy1, yy2)) && (y3 <= Math.max(yy1, yy2))) {
-                    if ((x3 >= xx1 - 5) && (x3 <= xx1 + 5)) {
-                      strokesArray[i][7 + (strokesArray[i][0] == 2 ? 0 : 2)] = (x3 * 9 + x2) / 10.;
-                      strokesArray[i][8 + (strokesArray[i][0] == 2 ? 0 : 2)] = (y3 * 9 + y2) / 10.;
-                      continue strokeLoop;
-                    }
-                  }
                 }
               }
             }
-            strokesArray[i][7 + (strokesArray[i][0] == 2 ? 0 : 2)] = (x3 * 4 + x2) / 5.;
-            strokesArray[i][8 + (strokesArray[i][0] == 2 ? 0 : 2)] = (y3 * 4 + y2) / 5.;
+            strokesArray[i][7 + (strokesArray[i][0] == 2 ? 0 : 2)] = (x3 * 9 + x2) / 10.;
+            strokesArray[i][8 + (strokesArray[i][0] == 2 ? 0 : 2)] = (y3 * 9 + y2) / 10.;
           }
         }
       }
