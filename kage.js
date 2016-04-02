@@ -389,41 +389,46 @@ function Kage(size){
   function adjustInclusion(strokesArray){ // strokesArray
     var boxes = new Array();
     for(var i = 0; i < strokesArray.length; i++){
-      if((strokesArray[i][0] == 1) && (strokesArray[i][3] == strokesArray[i][5])){
+      var si = strokesArray[i];
+      /* Vertical lines */
+      if(((si[0] == 1) || (si[0] == 3)) && (si[3] == si[5])){
         for(var j = i + 1; j < strokesArray.length; j++){
-          if((strokesArray[j][0] == 1) && (strokesArray[j][3] == strokesArray[j][5])){
-            if (Math.abs(strokesArray[i][3] - strokesArray[j][3]) <= 100) {
+          var sj = strokesArray[j];
+          if(((sj[0] == 1) || (sj[0] == 3)) && (sj[3] == sj[5])){
+            if (Math.abs(si[3] - sj[3]) <= 100) {
               var tmpArray = [
-                Math.min(strokesArray[i][3], strokesArray[j][3]),
-                Math.max(strokesArray[i][4], strokesArray[j][4]),
-                Math.max(strokesArray[i][5], strokesArray[j][5]),
-                Math.min(strokesArray[i][6], strokesArray[j][6])];
+                Math.min(si[3], sj[3]),
+                Math.max(si[4], sj[4]),
+                Math.max(si[5], sj[5]),
+                Math.min(si[6], sj[6])];
               if ((tmpArray[0] < tmpArray[2]) && (tmpArray[1] < tmpArray[3])) {
                 boxes.push([
-                  Math.min(strokesArray[i][3], strokesArray[j][3]),
-                  Math.min(strokesArray[i][4], strokesArray[j][4]),
-                  Math.max(strokesArray[i][5], strokesArray[j][5]),
-                  Math.max(strokesArray[i][6], strokesArray[j][6])]);
+                  Math.min(si[3], sj[3]),
+                  Math.min(si[4], sj[4]),
+                  Math.max(si[5], sj[5]),
+                  Math.max(si[6], sj[6])]);
               }
             }
           }
         }
       }
-      if((strokesArray[i][0] == 1) && (strokesArray[i][4] == strokesArray[i][6])){
+      /* Horizontal lines */
+      if(((si[0] == 1) && (si[4] == si[6])) || ((si[0] == 3) && (si[6] == si[8]))){
         for(var j = i + 1; j < strokesArray.length; j++){
-          if((strokesArray[j][0] == 1) && (strokesArray[j][4] == strokesArray[j][6])){
-            if (Math.abs(strokesArray[i][4] - strokesArray[j][4]) <= 100) {
+          var sj = strokesArray[j];
+          if(((sj[0] == 1) && (sj[4] == sj[6])) || ((sj[0] == 3) && (sj[6] == sj[8]))){
+            if (Math.abs(si[4] - sj[4]) <= 100) {
               var tmpArray = [
-                Math.max(strokesArray[i][3], strokesArray[j][3]),
-                Math.min(strokesArray[i][4], strokesArray[j][4]),
-                Math.min(strokesArray[i][5], strokesArray[j][5]),
-                Math.max(strokesArray[i][6], strokesArray[j][6])];
+                Math.max(si[si[0]==3?5:3], sj[sj[0]==3?5:3]),
+                Math.min(si[si[0]==3?6:4], sj[sj[0]==3?6:4]),
+                Math.min(si[si[0]==3?7:5], sj[sj[0]==3?7:5]),
+                Math.max(si[si[0]==3?8:6], sj[sj[0]==3?8:6])];
               if ((tmpArray[0] < tmpArray[2]) && (tmpArray[1] < tmpArray[3])) {
                 boxes.push([
-                  Math.min(strokesArray[i][3], strokesArray[j][3]),
-                  Math.min(strokesArray[i][4], strokesArray[j][4]),
-                  Math.max(strokesArray[i][5], strokesArray[j][5]),
-                  Math.max(strokesArray[i][6], strokesArray[j][6])]);
+                  Math.min(si[si[0]==3?5:3], sj[sj[0]==3?5:3]),
+                  Math.min(si[si[0]==3?6:4], sj[sj[0]==3?6:4]),
+                  Math.max(si[si[0]==3?7:5], sj[sj[0]==3?7:5]),
+                  Math.max(si[si[0]==3?8:6], sj[sj[0]==3?8:6])]);
               }
             }
           }
