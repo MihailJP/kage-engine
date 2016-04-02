@@ -728,6 +728,12 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
       }
     }
     
+    if(((a1 % 100 == 7)||(a1 % 100 == 27))&&(a2 % 100 == 0)){
+      rad = Math.atan((y2 - sy2) / (x2 - sx2));
+      x2 = x2 + kWidth * Math.cos(rad);
+      y2 = y2 + kWidth * Math.sin(rad);
+    }
+
     poly = new Polygon();
     poly2 = new Polygon();
     poly3 = new Polygon();
