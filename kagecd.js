@@ -1395,13 +1395,16 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
       poly = new Polygon();
       poly.push(x1 + Math.sin(rad) * kWidth, y1 - Math.cos(rad) * kWidth);
       poly.push(x2 + Math.sin(rad) * kWidth, y2 - Math.cos(rad) * kWidth);
-      if ((y1 > y2) && ((ta1 % 100 == 0) || (ta1 % 100 == 22))) {
-        poly.push(x2 - Math.sin(rad) * kWidth * 1.5,
-                  y2 + Math.cos(rad) * kWidth * 1.5);
-        poly.push(x2 - Math.sin(rad) * kWidth * 1.5 - Math.cos(rad) * kWidth * 0.25,
-                  y2 + Math.cos(rad) * kWidth * 1.5 - Math.sin(rad) * kWidth * 0.25);
-        poly.push(x2 - Math.sin(rad) * kWidth - Math.cos(rad) * kWidth * 0.75,
-                  y2 + Math.cos(rad) * kWidth - Math.sin(rad) * kWidth * 0.75);
+      if((Math.abs(ty2 - ty1) < Math.abs(tx2 - tx1)) && (a1 != 6) && (a2 != 6) && !(tx1 > tx2)){
+      } else {
+        if ((y1 > y2) && ((ta1 % 100 == 0) || (ta1 % 100 == 22))) {
+          poly.push(x2 - Math.sin(rad) * kWidth * 1.5,
+                    y2 + Math.cos(rad) * kWidth * 1.5);
+          poly.push(x2 - Math.sin(rad) * kWidth * 1.5 - Math.cos(rad) * kWidth * 0.25,
+                    y2 + Math.cos(rad) * kWidth * 1.5 - Math.sin(rad) * kWidth * 0.25);
+          poly.push(x2 - Math.sin(rad) * kWidth - Math.cos(rad) * kWidth * 0.75,
+                    y2 + Math.cos(rad) * kWidth - Math.sin(rad) * kWidth * 0.75);
+        }
       }
       poly.push(x2 - Math.sin(rad) * kWidth, y2 + Math.cos(rad) * kWidth);
       poly.push(x1 - Math.sin(rad) * kWidth, y1 + Math.cos(rad) * kWidth);
