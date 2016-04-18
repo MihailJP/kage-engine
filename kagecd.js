@@ -1374,11 +1374,11 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
         a2 = ta2 % 100;
       }
       rad = Math.atan((y2 - y1) / (x2 - x1));
-      if(a1 % 10 == 2){
+      if((a1 % 10 == 2) && (a1 != 82)){
         x1 = x1 - kWidth * Math.cos(rad);
         y1 = y1 - kWidth * Math.sin(rad);
       }
-      if(a2 % 10 == 2){
+      if((a2 % 10 == 2) && (a2 != 132)){
         x2 = x2 + kWidth * Math.cos(rad);
         y2 = y2 + kWidth * Math.sin(rad);
       }
