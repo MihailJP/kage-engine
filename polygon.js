@@ -33,12 +33,12 @@ function Polygon(number){
     this.array = this.array.concat(poly.array);
   }
   Polygon.prototype.concat = concat;
-	
+
   function shift(){ // void
     this.array.shift();
   }
   Polygon.prototype.shift = shift;
-	
+
   function unshift(x, y, off){ // void
     var temp = new Object();
     temp.x = Math.floor(x*10)/10;
@@ -50,7 +50,7 @@ function Polygon(number){
     this.array.unshift(temp);
   }
   Polygon.prototype.unshift = unshift;
-	
+
   // property
   this.array = new Array();
   

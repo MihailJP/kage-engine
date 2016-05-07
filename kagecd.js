@@ -985,7 +985,7 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
       
       if((a1 == 6 && a2 == 0) || a2 == 1){ //KAGI NO YOKO BOU NO SAIGO NO MARU ... no need only used at 1st=yoko
         poly = new Polygon();
-	if(kage.kUseCurve){
+        if(kage.kUseCurve){
           poly.push(x2 - kMinWidthT, y2);
           poly.push(x2 - kMinWidthT * 0.9, y2 + kMinWidthT * 0.9, 1);
           poly.push(x2, y2 + kMinWidthT);
