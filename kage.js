@@ -8,7 +8,20 @@ function Kage(size){
   
   function makeGlyph2(polygons, data){ // void
     if(data != ""){
-      var strokesArray = this.adjustDiagonal(this.adjustInclusion(this.adjustYoko(this.adjustDownLeft(this.adjustKirikuchi(this.adjustUroko2(this.adjustUroko(this.adjustKakato(this.adjustTate(this.adjustMage(this.adjustHane(this.getEachStrokes(data))))))))))));
+      var strokesArray =
+        this.adjustDiagonal(
+        this.adjustInclusion(
+        this.adjustYoko(
+        this.adjustDownLeft(
+        this.adjustKirikuchi(
+        this.adjustUroko2(
+        this.adjustUroko(
+        this.adjustKakato(
+        this.adjustTate(
+        this.adjustMage(
+        this.adjustHane(
+        this.getEachStrokes(
+        data))))))))))));
       for(var i = 0; i < strokesArray.length; i++){
         dfDrawFont(this, polygons,
                    strokesArray[i][0],
@@ -30,7 +43,20 @@ function Kage(size){
   function makeGlyph3(data){ // void
     var result = new Array();
     if(data != ""){
-      var strokesArray = this.adjustDiagonal(this.adjustInclusion(this.adjustYoko(this.adjustDownLeft(this.adjustKirikuchi(this.adjustUroko2(this.adjustUroko(this.adjustKakato(this.adjustTate(this.adjustMage(this.adjustHane(this.getEachStrokes(data))))))))))));
+      var strokesArray =
+        this.adjustDiagonal(
+        this.adjustInclusion(
+        this.adjustYoko(
+        this.adjustDownLeft(
+        this.adjustKirikuchi(
+        this.adjustUroko2(
+        this.adjustUroko(
+        this.adjustKakato(
+        this.adjustTate(
+        this.adjustMage(
+        this.adjustHane(
+        this.getEachStrokes(
+        data))))))))))));
       for(var i = 0; i < strokesArray.length; i++){
         var polygons = new Polygons();
         dfDrawFont(this, polygons,
