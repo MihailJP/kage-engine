@@ -1560,7 +1560,7 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
       
       if((a1 == 6 && a2 == 0) || a2 == 1){ //KAGI NO YOKO BOU NO SAIGO NO MARU ... no need only used at 1st=yoko
         poly = new Polygon();
-	if(kage.kUseCurve){
+        if(kage.kUseCurve){
           poly.push(x2 - kMinWidthT, y2);
           poly.push(x2 - kMinWidthT * 0.9, y2 + kMinWidthT * 0.9, 1);
           poly.push(x2, y2 + kMinWidthT);
@@ -1915,11 +1915,11 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
         case 23:
           poly.set(2, x2 - kMinWidthT, y2 + kage.kAdjustKakatoR[opt2] - kMinWidthT * 2);
           poly.set(1, x2 + kMinWidthT, y2 + kage.kAdjustKakatoR[opt2]);
-  	break;
+          break;
         case 24: //for T/H design
           poly.set(2, x2 - kMinWidthT, y2 + kage.kMinWidthY);
           poly.set(1, x2 + kMinWidthT, y2 + kage.kMinWidthY);
-  	break;
+          break;
         case 32:
           poly.set(2, x2 - kMinWidthT, y2 + kage.kMinWidthY);
           poly.set(1, x2 + kMinWidthT, y2 + kage.kMinWidthY);
