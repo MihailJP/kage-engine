@@ -8,7 +8,22 @@ function Kage(size){
   
   function makeGlyph2(polygons, data){ // void
     if(data != ""){
-      var strokesArray = this.adjustRoof(this.adjustLeftTop(this.adjustKirikuchi(this.adjustUroko2(this.adjustUroko(this.adjustKakato(this.adjustTate(this.adjustMage(this.adjustHane(this.getEachStrokes(data))))))))));
+      var strokesArray =
+        this.adjustRoof(
+        this.adjustLeftTop(
+        this.adjustDiagonal(
+        this.adjustInclusion(
+        this.adjustYoko(
+        this.adjustDownLeft(
+        this.adjustKirikuchi(
+        this.adjustUroko2(
+        this.adjustUroko(
+        this.adjustKakato(
+        this.adjustTate(
+        this.adjustMage(
+        this.adjustHane(
+        this.getEachStrokes(
+        data))))))))))))));
       for(var i = 0; i < strokesArray.length; i++){
         dfDrawFont(this, polygons,
                    strokesArray[i][0],
@@ -30,7 +45,22 @@ function Kage(size){
   function makeGlyph3(data){ // void
     var result = new Array();
     if(data != ""){
-      var strokesArray = this.adjustRoof(this.adjustLeftTop(this.adjustKirikuchi(this.adjustUroko2(this.adjustUroko(this.adjustKakato(this.adjustTate(this.adjustMage(this.adjustHane(this.getEachStrokes(data))))))))));
+      var strokesArray =
+        this.adjustRoof(
+        this.adjustLeftTop(
+        this.adjustDiagonal(
+        this.adjustInclusion(
+        this.adjustYoko(
+        this.adjustDownLeft(
+        this.adjustKirikuchi(
+        this.adjustUroko2(
+        this.adjustUroko(
+        this.adjustKakato(
+        this.adjustTate(
+        this.adjustMage(
+        this.adjustHane(
+        this.getEachStrokes(
+        data))))))))))))));
       for(var i = 0; i < strokesArray.length; i++){
         var polygons = new Polygons();
         dfDrawFont(this, polygons,
@@ -270,7 +300,8 @@ function Kage(size){
   
   function adjustKirikuchi(strokesArray){ // strokesArray
     for(var i = 0; i < strokesArray.length; i++){
-      if(strokesArray[i][0] == 2 && strokesArray[i][1] == 32 &&
+      if(((strokesArray[i][0] == 2) || (strokesArray[i][0] == 1 && this.kShotai == this.kGothic)) &&
+         strokesArray[i][1] == 32 &&
          strokesArray[i][3] > strokesArray[i][5] &&
          strokesArray[i][4] < strokesArray[i][6])
       {
@@ -280,6 +311,19 @@ function Kage(size){
              strokesArray[j][4] == strokesArray[i][4] && strokesArray[j][4] == strokesArray[j][6])
           {
             strokesArray[i][1] = 132;
+            j = strokesArray.length;
+          }
+        }
+      }
+      if(strokesArray[i][0] == 1 && this.kShotai == this.kGothic &&
+         strokesArray[i][2] == 32 &&
+         strokesArray[i][3] > strokesArray[i][5] &&
+         strokesArray[i][4] < strokesArray[i][6]){
+        for(var j = 0; j < strokesArray.length; j++){ // no need to skip when i == j
+          if(strokesArray[j][0] == 1 &&
+             strokesArray[j][3] < strokesArray[i][5] && strokesArray[j][5] > strokesArray[i][5] &&
+             strokesArray[j][6] == strokesArray[i][6] && strokesArray[j][4] == strokesArray[j][6]){
+            strokesArray[i][2] = 82;
             j = strokesArray.length;
           }
         }
@@ -313,6 +357,174 @@ function Kage(size){
     return strokesArray;
   }
   Kage.prototype.adjustKakato = adjustKakato;
+  
+  function adjustDownLeft(strokesArray){ // strokesArray
+    if (this.kShotai == this.kGothic) {
+      var x1, x2, x3, y1, y2, y3;
+      var xx1, xx2, yy1, yy2, lines;
+      strokeLoop: for(var i = 0; i < strokesArray.length; i++){
+        if (((strokesArray[i][0] == 2) || (strokesArray[i][0] == 6) || (strokesArray[i][0] == 7)) && (strokesArray[i][2] == 7)) {
+          x1 = strokesArray[i][3]; y1 = strokesArray[i][4];
+          x2 = strokesArray[i][5 + (strokesArray[i][0] == 2 ? 0 : 2)];
+          y2 = strokesArray[i][6 + (strokesArray[i][0] == 2 ? 0 : 2)];
+          x3 = strokesArray[i][7 + (strokesArray[i][0] == 2 ? 0 : 2)];
+          y3 = strokesArray[i][8 + (strokesArray[i][0] == 2 ? 0 : 2)];
+          if ((x1 > x3) && (y1 < y3)) { // down-left stroke
+            for(var k = 0; k < strokesArray.length; k++){ // each target stroke
+              if (i == k) {continue;}
+              if (Math.hypot(x3 - strokesArray[k][3], y3 - strokesArray[k][4]) <= 4) {
+                strokesArray[i][7 + (strokesArray[i][0] == 2 ? 0 : 2)] = strokesArray[k][3] - this.kWidth;
+                continue strokeLoop;
+              }
+              switch (strokesArray[k][0]) {
+                case 1:                 lines = 1; break;
+                case 2: case 3:         lines = 2; break;
+                case 4: case 6: case 7: lines = 3; break;
+                default:                lines = 0; break;
+              }
+              for (var j = 0; j < lines; j++) {
+                xx1 = strokesArray[k][3 + j * 2]; yy1 = strokesArray[k][4 + j * 2];
+                xx2 = strokesArray[k][5 + j * 2]; yy2 = strokesArray[k][6 + j * 2];
+                if (xx1 != xx2) { // horizontal or diagonal target line
+                  if ((strokesArray[k][3] < strokesArray[k][3 + lines * 2]) && (strokesArray[k][4] > strokesArray[k][4 + lines * 2]) && (strokesArray[k][2] == 7) && ((strokesArray[k][0] == 2) || (strokesArray[k][0] == 6))) { // up-right stroke
+                    var a = (yy2 - yy1) / (xx2 - xx1);
+                    var b = yy1 - xx1 * a;
+                    if ((x3 >= Math.min(xx1, xx2)) && (x3 <= Math.max(xx1, xx2))) {
+                      if ((y3 >= (a * x3 + b - 5)) && (y3 <= (a * x3 + b + 5))) {
+                        continue strokeLoop;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            strokesArray[i][7 + (strokesArray[i][0] == 2 ? 0 : 2)] = (x3 * 9 + x2) / 10.;
+            strokesArray[i][8 + (strokesArray[i][0] == 2 ? 0 : 2)] = (y3 * 9 + y2) / 10.;
+          }
+        }
+      }
+    }
+    return strokesArray;
+  }
+  Kage.prototype.adjustDownLeft = adjustDownLeft;
+  
+  function adjustYoko(strokesArray){ // strokesArray
+    if (this.kShotai == this.kGothic) {
+      for(var i = 0; i < strokesArray.length; i++){
+        if((strokesArray[i][0] == 1) && strokesArray[i][4] == strokesArray[i][6]){
+          for(var j = 0; j < strokesArray.length; j++){
+            if(i != j && (strokesArray[j][0] == 1) && strokesArray[j][4] == strokesArray[j][6] &&
+              !(strokesArray[i][3] + 1 > strokesArray[j][5] || strokesArray[i][5] - 1 < strokesArray[j][3]) &&
+              Math.abs(strokesArray[i][4] - strokesArray[j][4]) < this.kWidth * this.kAdjustTateStep * 1.25){
+              strokesArray[i][1] += (this.kAdjustTateStep - Math.floor(Math.abs(strokesArray[i][4] - strokesArray[j][4]) / this.kWidth / 1.25)) * 1000;
+              if(strokesArray[i][1] > Math.floor(this.kAdjustTateStep * 1.5) * 1000){
+                strokesArray[i][1] = strokesArray[i][1] % 1000 + Math.floor(this.kAdjustTateStep * 1.5) * 1000;
+              }
+            }
+          }
+        }
+      }
+    }
+    return strokesArray;
+  }
+  Kage.prototype.adjustYoko = adjustYoko;
+  
+  function adjustInclusion(strokesArray){ // strokesArray
+    var boxes = new Array();
+    for(var i = 0; i < strokesArray.length; i++){
+      var si = strokesArray[i];
+      /* Vertical lines */
+      if(((si[0] == 1) || (si[0] == 3)) && (si[3] == si[5])){
+        for(var j = i + 1; j < strokesArray.length; j++){
+          var sj = strokesArray[j];
+          if(((sj[0] == 1) || (sj[0] == 3)) && (sj[3] == sj[5])){
+            if (Math.abs(si[3] - sj[3]) <= 100) {
+              var tmpArray = [
+                Math.min(si[3], sj[3]),
+                Math.max(si[4], sj[4]),
+                Math.max(si[5], sj[5]),
+                Math.min(si[6], sj[6])];
+              if ((tmpArray[0] < tmpArray[2]) && (tmpArray[1] < tmpArray[3])) {
+                boxes.push([
+                  Math.min(si[3], sj[3]),
+                  Math.min(si[4], sj[4]),
+                  Math.max(si[5], sj[5]),
+                  Math.max(si[6], sj[6])]);
+              }
+            }
+          }
+        }
+      }
+      /* Horizontal lines */
+      if(((si[0] == 1) && (si[4] == si[6])) || ((si[0] == 3) && (si[6] == si[8]))){
+        for(var j = i + 1; j < strokesArray.length; j++){
+          var sj = strokesArray[j];
+          if(((sj[0] == 1) && (sj[4] == sj[6])) || ((sj[0] == 3) && (sj[6] == sj[8]))){
+            if (Math.abs(si[4] - sj[4]) <= 100) {
+              var tmpArray = [
+                Math.max(si[si[0]==3?5:3], sj[sj[0]==3?5:3]),
+                Math.min(si[si[0]==3?6:4], sj[sj[0]==3?6:4]),
+                Math.min(si[si[0]==3?7:5], sj[sj[0]==3?7:5]),
+                Math.max(si[si[0]==3?8:6], sj[sj[0]==3?8:6])];
+              if ((tmpArray[0] < tmpArray[2]) && (tmpArray[1] < tmpArray[3])) {
+                boxes.push([
+                  Math.min(si[si[0]==3?5:3], sj[sj[0]==3?5:3]),
+                  Math.min(si[si[0]==3?6:4], sj[sj[0]==3?6:4]),
+                  Math.max(si[si[0]==3?7:5], sj[sj[0]==3?7:5]),
+                  Math.max(si[si[0]==3?8:6], sj[sj[0]==3?8:6])]);
+              }
+            }
+          }
+        }
+      }
+    }
+    for(var i = 0; i < strokesArray.length; i++){
+      if((strokesArray[i][0] == 2) || (strokesArray[i][0] == 3) || ((strokesArray[i][0] == 1) && (strokesArray[i][3] != strokesArray[i][5]) && (strokesArray[i][4] != strokesArray[i][6]))) {
+        for(var j = 0; j < boxes.length; j++){
+          if((strokesArray[i][3] > boxes[j][0]) && (strokesArray[i][4] > boxes[j][1]) && (strokesArray[i][3] < boxes[j][2]) && (strokesArray[i][4] < boxes[j][3])) {
+            if((strokesArray[i][5] > boxes[j][0]) && (strokesArray[i][6] > boxes[j][1]) && (strokesArray[i][5] < boxes[j][2]) && (strokesArray[i][6] < boxes[j][3])) {
+              if((strokesArray[i][0] == 1) || ((strokesArray[i][7] > boxes[j][0]) && (strokesArray[i][8] > boxes[j][1]) && (strokesArray[i][7] < boxes[j][2]) && (strokesArray[i][8] < boxes[j][3]))) {
+                strokesArray[i][1] = Math.max(strokesArray[i][1], strokesArray[i][1] % 1000 + (this.kAdjustTateStep - Math.floor((Math.min(boxes[j][3] - boxes[j][1], boxes[j][2] - boxes[j][0]) - 25) / 100 * this.kAdjustTateStep)) * 1000);
+                if(strokesArray[i][1] > this.kAdjustTateStep * 1000){
+                  strokesArray[i][1] = strokesArray[i][1] % 1000 + this.kAdjustTateStep * 1000;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return strokesArray;
+  }
+  Kage.prototype.adjustInclusion = adjustInclusion;
+  
+  function adjustDiagonal(strokesArray){ // strokesArray
+    for(var i = 0; i < strokesArray.length; i++){
+      if(strokesArray[i][0] == 2) {
+        for(var j = 0; j < strokesArray.length; j++){
+          if (i == j) {continue;}
+          if(strokesArray[j][0] == 2) {
+            if(Math.abs(Math.sin(Math.atan2(strokesArray[j][8] - strokesArray[j][4], strokesArray[j][7] - strokesArray[j][3]) - Math.atan2(strokesArray[i][8] - strokesArray[i][4], strokesArray[i][7] - strokesArray[i][3]))) < 0.2) {
+              strokesArray[i][1] = Math.max(
+                strokesArray[i][1], strokesArray[i][1] % 1000 + (
+                  this.kAdjustTateStep - Math.min(this.kAdjustTateStep, Math.floor(Math.min(
+                    Math.hypot(strokesArray[j][3] - strokesArray[i][3], strokesArray[j][6] - strokesArray[i][6]),
+                    Math.hypot(strokesArray[j][5] - strokesArray[i][5], strokesArray[j][6] - strokesArray[i][6]),
+                    Math.hypot(strokesArray[j][7] - strokesArray[i][7], strokesArray[j][8] - strokesArray[i][8])
+                  ) / this.kMinWidthT))
+                ) * 1000
+              );
+              if(strokesArray[i][1] > this.kAdjustTateStep * 1000){
+                strokesArray[i][1] = strokesArray[i][1] % 1000 + this.kAdjustTateStep * 1000;
+              }
+            }
+          }
+        }
+      }
+    }
+    return strokesArray;
+  }
+  Kage.prototype.adjustDiagonal = adjustDiagonal;
   
   function adjustLeftTop(strokesArray){ // strokesArray
     if (this.kShotai == this.kSocho) {
