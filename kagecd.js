@@ -171,7 +171,11 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
             ib = Math.cos(ir) * (kMinWidthT);
           }
           else if(ix == 0){
-            ia = kMinWidthT;
+            if (iy < 0) {
+              ia = -kMinWidthT;
+            } else {
+              ia = kMinWidthT;
+            }
             ib = 0;
           }
           else{
@@ -278,7 +282,11 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
           ib = Math.cos(ir) * (kMinWidthT);
         }
         else if(ix == 0){
-          ia = kMinWidthT;
+          if (iy < 0) {
+            ia = -kMinWidthT;
+          } else {
+            ia = kMinWidthT;
+          }
           ib = 0;
         }
         else{
@@ -745,7 +753,11 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
           ib = Math.cos(ir) * kage.kMinWidthT;
         }
         else if(ix == 0){
-          ia = kage.kMinWidthT;
+          if (iy < 0) {
+            ia = -kage.kMinWidthT;
+          } else {
+            ia = kage.kMinWidthT;
+          }
           ib = 0;
         }
         else{
@@ -762,7 +774,11 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
           ib = Math.cos(ir) * kage.kWidth;
         }
         else if(ix == 0){
-          ia = kage.kWidth;
+          if (iy < 0) {
+            ia = -kage.kWidth;
+          } else {
+            ia = kage.kWidth;
+          }
           ib = 0;
         }
         else{
@@ -977,15 +993,19 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
           //KAGI NO YOKO BOU NO HANE
           poly = new Polygon();
           if(x1 < x2){
-            poly.push(x2, y2 - kMinWidthT + 1);
+            //poly.push(x2, y2 - kMinWidthT + 1);
+            poly.push(x2, y2 - kMinWidthT);
             poly.push(x2 + 2, y2 - kMinWidthT - kage.kWidth * (4 * (1 - opt1 / kage.kAdjustMageStep) + 1));
             poly.push(x2, y2 - kMinWidthT - kage.kWidth * (4 * (1 - opt1 / kage.kAdjustMageStep) + 1));
-            poly.push(x2 - kMinWidthT, y2 - kMinWidthT + 1);
+            //poly.push(x2 - kMinWidthT, y2 - kMinWidthT + 1);
+            poly.push(x2 - kMinWidthT, y2 - kMinWidthT);
           } else {
-            poly.push(x2, y2 - kMinWidthT + 1);
+            //poly.push(x2, y2 - kMinWidthT + 1);
+            poly.push(x2, y2 - kMinWidthT);
             poly.push(x2 - 2, y2 - kMinWidthT - kage.kWidth * (4 * (1 - opt1 / kage.kAdjustMageStep) + 1));
             poly.push(x2, y2 - kMinWidthT - kage.kWidth * (4 * (1 - opt1 / kage.kAdjustMageStep) + 1));
-            poly.push(x2 + kMinWidthT, y2 - kMinWidthT + 1);
+            //poly.push(x2 + kMinWidthT, y2 - kMinWidthT + 1);
+            poly.push(x2 + kMinWidthT, y2 - kMinWidthT);
           }
           //poly.reverse(); // for fill-rule
           polygons.push(poly);
