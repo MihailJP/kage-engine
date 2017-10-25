@@ -21,7 +21,8 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
     opt4 = Math.floor(ta2 / 1000);
     
     kMinWidthT = kage.kMinWidthT - opt1 / 2;
-    kMinWidthT2 = kage.kMinWidthT - opt4 / 2;
+    //kMinWidthT2 = kage.kMinWidthT - opt4 / 2;
+    kMinWidthT2 = kMinWidthT;
     
     switch(a1 % 100){
     case 0:

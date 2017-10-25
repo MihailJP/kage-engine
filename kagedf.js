@@ -1,5 +1,6 @@
 function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
   var tx1, tx2, tx3, tx4, ty1, ty2, ty3, ty4, v;
+  var kMage
   var rad;
   
   if(kage.kShotai == kage.kMincho){
@@ -34,23 +35,26 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
     case 2:
     //case 12: // ... no need
       if(a3 % 100 == 4){
+        kMage = Math.max(1, kage.kMage - Math.floor((a2 - a2 % 1000) / 1000));
         if(x2 == x3){
           tx1 = x3;
-          ty1 = y3 - kage.kMage;
+          ty1 = y3 - kMage;
         }
         else if(y2 == y3){
-          tx1 = x3 - kage.kMage;
+          tx1 = x3 - kMage;
           ty1 = y3;
         }
         else{
           rad = Math.atan((y3 - y2) / (x3 - x2));
           if(x2 < x3){ v = 1; } else{ v = -1; }
-          tx1 = x3 - kage.kMage * Math.cos(rad) * v;
-          ty1 = y3 - kage.kMage * Math.sin(rad) * v;
+          tx1 = x3 - kMage * Math.cos(rad) * v;
+          ty1 = y3 - kMage * Math.sin(rad) * v;
         }
         cdDrawCurve(kage, polygons, x1, y1, x2, y2, tx1, ty1, a2, 1);
-        cdDrawCurve(kage, polygons, tx1, ty1, x3, y3, x3 - kage.kMage, y3, 1, a3 + 10);
-      }
+        //cdDrawCurve(kage, polygons, tx1, ty1, x3, y3, x3 - kage.kMage, y3, 1, a3 + 10);
+        cdDrawCurve(kage, polygons, tx1, ty1, x3, y3, x3 - kMage, y3, 1 + (a2 - a2 % 1000) * 100, a3 + 10);
+        //cdDrawCurve(kage, polygons, tx1, ty1, x2, y2, tx2, ty2, 1 + (a2 - a2 % 1000) * 100, 1 + (a3 - a3 % 1000));
+     }
       else if(a3 == 5){
         cdDrawCurve(kage, polygons, x1, y1, x2, y2, x3, y3, a2, 15);
       }
@@ -135,7 +139,8 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
           ty2 = y2 + kage.kMage * Math.sin(rad) * v;
         }
         cdDrawLine(kage, polygons, x1, y1, tx1, ty1, a2, 1);
-        cdDrawCurve(kage, polygons, tx1, ty1, x2, y2, tx2, ty2, 1 + (a2 - a2 % 1000) * 100, 1 + (a3 - a3 % 1000));
+        //cdDrawCurve(kage, polygons, tx1, ty1, x2, y2, tx2, ty2, 1 + (a2 - a2 % 1000) * 100, 1 + (a3 - a3 % 1000));
+        cdDrawCurve(kage, polygons, tx1, ty1, x2, y2, tx2, ty2, 1 + (a2 - a2 % 1000) * 100, 0 + (a3 - a3 % 1000));
         cdDrawLine(kage, polygons, tx2, ty2, x3, y3, 6 + (a3 - a3 % 1000), a3); // bolder by force
       }
       break;
