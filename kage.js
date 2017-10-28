@@ -502,36 +502,53 @@ function Kage(size){
     var xx11, xx12, xx13, yy11, yy12, yy13;
     var xx21, xx22, xx23, yy21, yy22, yy23;
     for(var i = 0; i < strokesArray.length; i++){
-      if((strokesArray[i][0] == 1)||(strokesArray[i][0] == 2)) {
-        if(strokesArray[i][0] == 2) {
-          xx11 = strokesArray[i][3]; yy11 = strokesArray[i][4];
-          xx12 = strokesArray[i][5]; yy12 = strokesArray[i][6];
-          xx13 = strokesArray[i][7]; yy13 = strokesArray[i][8];
-        } else if(strokesArray[i][0] == 1) {
-          xx11 = strokesArray[i][3]; yy11 = strokesArray[i][4];
-          xx13 = strokesArray[i][5]; yy13 = strokesArray[i][6];
-          xx12 = Math.floor((xx13 + xx11) / 2); yy12 = Math.floor((yy13 + yy11) / 2);
+      if((strokesArray[i][0] >= 1)||(strokesArray[i][0] <= 3)) {
+        switch (strokesArray[i][0]) {
+          case 2:
+            xx11 = strokesArray[i][3]; yy11 = strokesArray[i][4];
+            xx12 = strokesArray[i][5]; yy12 = strokesArray[i][6];
+            xx13 = strokesArray[i][7]; yy13 = strokesArray[i][8];
+            break;
+          case 1: case 3:
+            xx11 = strokesArray[i][3]; yy11 = strokesArray[i][4];
+            xx13 = strokesArray[i][5]; yy13 = strokesArray[i][6];
+            xx12 = Math.floor((xx13 + xx11) / 2);
+            yy12 = Math.floor((yy13 + yy11) / 2);
+            break;
         }
         for(var j = 0; j < strokesArray.length; j++){
           if (i == j) {continue;}
-          if((strokesArray[j][0] == 1)||(strokesArray[j][0] == 2)) {
-            if(strokesArray[j][0] == 2) {
-              xx21 = strokesArray[j][3]; yy21 = strokesArray[j][4];
-              xx22 = strokesArray[j][5]; yy22 = strokesArray[j][6];
-              xx23 = strokesArray[j][7]; yy23 = strokesArray[j][8];
-            } else if(strokesArray[j][0] == 1) {
-              xx21 = strokesArray[j][3]; yy21 = strokesArray[j][4];
-              xx23 = strokesArray[j][5]; yy23 = strokesArray[j][6];
-              xx22 = Math.floor((xx23 + xx21) / 2); yy22 = Math.floor((yy23 + yy21) / 2);
+          if((strokesArray[j][0] >= 1)||(strokesArray[j][0] <= 3)) {
+            switch (strokesArray[j][0]) {
+              case 2:
+                xx21 = strokesArray[j][3]; yy21 = strokesArray[j][4];
+                xx22 = strokesArray[j][5]; yy22 = strokesArray[j][6];
+                xx23 = strokesArray[j][7]; yy23 = strokesArray[j][8];
+                break;
+              case 1: case 3:
+                xx21 = strokesArray[j][3]; yy21 = strokesArray[j][4];
+                xx23 = strokesArray[j][5]; yy23 = strokesArray[j][6];
+                xx22 = Math.floor((xx23 + xx21) / 2);
+                yy22 = Math.floor((yy23 + yy21) / 2);
+                break;
             }
-            if(Math.abs(Math.sin(Math.atan2(yy23 - yy21, xx23 - xx21) - Math.atan2(yy13 - yy11, xx13 - xx11))) < 0.2) {
+            if(Math.abs(Math.sin(Math.atan2(yy23 - yy21, xx23 - xx21) - Math.atan2(yy13 - yy11, xx13 - xx11))) < 0.3) {
               strokesArray[i][1] = Math.max(
                 strokesArray[i][1], strokesArray[i][1] % 1000 + (
-                  this.kAdjustTateStep - Math.min(this.kAdjustTateStep, Math.floor(Math.min(
-                    Math.hypot(xx21 - xx11, yy21 - yy11),
-                    Math.hypot(xx22 - xx12, yy22 - yy12),
-                    Math.hypot(xx23 - xx13, yy23 - yy13)
-                  ) / this.kMinWidthT))
+                  this.kAdjustTateStep - Math.min(
+                    this.kAdjustTateStep,
+                    Math.floor(Math.min(
+                      Math.hypot(xx21 - xx11, yy21 - yy11),
+                      Math.hypot(xx22 - xx12, yy22 - yy12),
+                      Math.hypot(xx23 - xx13, yy23 - yy13)
+                    ) / this.kMinWidthT),
+                    (strokesArray[i][0] == 1 && xx11 == xx13) // vertical
+                      ? Math.floor(Math.min(
+                        Math.abs(xx21 - xx11),
+                        Math.abs(xx22 - xx11),
+                        Math.abs(xx23 - xx11)
+                      ) / this.kMinWidthT) : Infinity
+                  )
                 ) * 1000
               );
               if(strokesArray[i][1] > this.kAdjustTateStep * 1000){
