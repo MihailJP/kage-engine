@@ -449,7 +449,7 @@ function Kage(size){
                   Math.min(si[3], sj[3]),
                   Math.min(si[4], sj[4]),
                   Math.max(si[5], sj[5]),
-                  Math.max(si[6], sj[6])]);
+                  Math.max(si[6], sj[6]), 100]);
               }
             }
           }
@@ -460,7 +460,7 @@ function Kage(size){
         for(var j = i + 1; j < strokesArray.length; j++){
           var sj = strokesArray[j];
           if(((sj[0] == 1) && (sj[4] == sj[6])) || ((sj[0] == 3) && (sj[6] == sj[8]))){
-            if (Math.abs(si[4] - sj[4]) <= 100) {
+            if (Math.abs(si[4] - sj[4]) <= 40) {
               var tmpArray = [
                 Math.max(si[si[0]==3?5:3], sj[sj[0]==3?5:3]),
                 Math.min(si[si[0]==3?6:4], sj[sj[0]==3?6:4]),
@@ -471,7 +471,7 @@ function Kage(size){
                   Math.min(si[si[0]==3?5:3], sj[sj[0]==3?5:3]),
                   Math.min(si[si[0]==3?6:4], sj[sj[0]==3?6:4]),
                   Math.max(si[si[0]==3?7:5], sj[sj[0]==3?7:5]),
-                  Math.max(si[si[0]==3?8:6], sj[sj[0]==3?8:6])]);
+                  Math.max(si[si[0]==3?8:6], sj[sj[0]==3?8:6]), 40]);
               }
             }
           }
@@ -484,7 +484,7 @@ function Kage(size){
           if((strokesArray[i][3] > boxes[j][0]) && (strokesArray[i][4] > boxes[j][1]) && (strokesArray[i][3] < boxes[j][2]) && (strokesArray[i][4] < boxes[j][3])) {
             if((strokesArray[i][5] > boxes[j][0]) && (strokesArray[i][6] > boxes[j][1]) && (strokesArray[i][5] < boxes[j][2]) && (strokesArray[i][6] < boxes[j][3])) {
               if((strokesArray[i][0] == 1) || ((strokesArray[i][7] > boxes[j][0]) && (strokesArray[i][8] > boxes[j][1]) && (strokesArray[i][7] < boxes[j][2]) && (strokesArray[i][8] < boxes[j][3]))) {
-                strokesArray[i][1] = Math.max(strokesArray[i][1], strokesArray[i][1] % 1000 + (this.kAdjustTateStep - Math.floor((Math.min(boxes[j][3] - boxes[j][1], boxes[j][2] - boxes[j][0]) - 25) / 100 * this.kAdjustTateStep)) * 1000);
+                strokesArray[i][1] = Math.max(strokesArray[i][1], strokesArray[i][1] % 1000 + (this.kAdjustTateStep - Math.floor((Math.min(boxes[j][3] - boxes[j][1], boxes[j][2] - boxes[j][0]) - (boxes[j][4] / 4)) / boxes[j][4] * this.kAdjustTateStep)) * 1000);
                 if(strokesArray[i][1] > this.kAdjustTateStep * 1000){
                   strokesArray[i][1] = strokesArray[i][1] % 1000 + this.kAdjustTateStep * 1000;
                 }
