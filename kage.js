@@ -532,7 +532,7 @@ function Kage(size){
                 yy22 = Math.floor((yy23 + yy21) / 2);
                 break;
             }
-            if(Math.abs(Math.sin(Math.atan2(yy23 - yy21, xx23 - xx21) - Math.atan2(yy13 - yy11, xx13 - xx11))) < 0.3) {
+            if((Math.abs(Math.sin(Math.atan2(yy23 - yy21, xx23 - xx21) - Math.atan2(yy13 - yy11, xx13 - xx11))) < 0.3) && (Math.hypot(xx13 - xx11, yy13 - yy11) < Math.hypot(xx23 - xx21, yy23 - yy21))) {
               strokesArray[i][1] = Math.max(
                 strokesArray[i][1], strokesArray[i][1] % 1000 + (
                   this.kAdjustTateStep - Math.min(
