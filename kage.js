@@ -438,7 +438,7 @@ function Kage(size){
         for(var j = i + 1; j < strokesArray.length; j++){
           var sj = strokesArray[j];
           if(((sj[0] == 1) || (sj[0] == 3)) && (sj[3] == sj[5])){
-            if (Math.abs(si[3] - sj[3]) <= 100) {
+            if (Math.abs(si[3] - sj[3]) <= 40) {
               var tmpArray = [
                 Math.min(si[3], sj[3]),
                 Math.max(si[4], sj[4]),
@@ -449,7 +449,7 @@ function Kage(size){
                   Math.min(si[3], sj[3]),
                   Math.min(si[4], sj[4]),
                   Math.max(si[5], sj[5]),
-                  Math.max(si[6], sj[6]), 100]);
+                  Math.max(si[6], sj[6]), 40]);
               }
             }
           }
@@ -510,8 +510,13 @@ function Kage(size){
             xx13 = strokesArray[i][7]; yy13 = strokesArray[i][8];
             break;
           case 1: case 3:
-            xx11 = strokesArray[i][3]; yy11 = strokesArray[i][4];
-            xx13 = strokesArray[i][5]; yy13 = strokesArray[i][6];
+            if (strokesArray[i][4] < strokesArray[i][6]) {
+              xx11 = strokesArray[i][3]; yy11 = strokesArray[i][4];
+              xx13 = strokesArray[i][5]; yy13 = strokesArray[i][6];
+            } else {
+              xx13 = strokesArray[i][3]; yy13 = strokesArray[i][4];
+              xx11 = strokesArray[i][5]; yy11 = strokesArray[i][6];
+            }
             xx12 = Math.floor((xx13 + xx11) / 2);
             yy12 = Math.floor((yy13 + yy11) / 2);
             break;
@@ -526,8 +531,13 @@ function Kage(size){
                 xx23 = strokesArray[j][7]; yy23 = strokesArray[j][8];
                 break;
               case 1: case 3:
-                xx21 = strokesArray[j][3]; yy21 = strokesArray[j][4];
-                xx23 = strokesArray[j][5]; yy23 = strokesArray[j][6];
+                if (strokesArray[j][4] < strokesArray[j][6]) {
+                  xx21 = strokesArray[j][3]; yy21 = strokesArray[j][4];
+                  xx23 = strokesArray[j][5]; yy23 = strokesArray[j][6];
+                } else {
+                  xx23 = strokesArray[j][3]; yy23 = strokesArray[j][4];
+                  xx21 = strokesArray[j][5]; yy21 = strokesArray[j][6];
+                }
                 xx22 = Math.floor((xx23 + xx21) / 2);
                 yy22 = Math.floor((yy23 + yy21) / 2);
                 break;
@@ -542,11 +552,11 @@ function Kage(size){
                       Math.hypot(xx22 - xx12, yy22 - yy12),
                       Math.hypot(xx23 - xx13, yy23 - yy13)
                     ) / this.kMinWidthT),
-                    (strokesArray[i][0] == 1 && xx11 == xx13) // vertical
+                    (strokesArray[i][0] == 1 && xx11 == xx13 && !(yy13 < yy21) && !(yy11 > yy23)) // vertical
                       ? Math.floor(Math.min(
                         Math.abs(xx21 - xx11),
-                        Math.abs(xx22 - xx11),
-                        Math.abs(xx23 - xx11)
+                        Math.abs(xx22 - xx12),
+                        Math.abs(xx23 - xx13)
                       ) / this.kMinWidthT) : Infinity
                   )
                 ) * 1000
