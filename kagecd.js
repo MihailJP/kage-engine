@@ -904,8 +904,9 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
       if(a1 == 0){ //beginning of the stroke
         poly = new Polygon();
         poly.push(x1 + kMinWidthT, y1 + kage.kMinWidthY * 0.5);
-        poly.push(x1 + kMinWidthT + kMinWidthT * 0.5, y1 + kage.kMinWidthY * 0.5 + kage.kMinWidthY);
-        poly.push(x1 + kMinWidthT - 2, y1 + kage.kMinWidthY * 0.5 + kage.kMinWidthY * 2 + 1);
+        poly.push(x1 + kMinWidthT * 1.5, y1 + kage.kMinWidthY * 1.5);
+        poly.push(x1 + kMinWidthT * 1.5, y1 + kage.kMinWidthY * 1.5 + 1);
+        poly.push(x1 + kMinWidthT - 2, y1 + kage.kMinWidthY * 2.5 + 2);
         polygons.push(poly);
       }
       
@@ -995,12 +996,21 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
         }
       }
       else{
-        //always same
-        poly = new Polygon(4);
-        poly.set(0, x1, y1 - kage.kMinWidthY);
-        poly.set(1, x2, y2 - kage.kMinWidthY);
-        poly.set(2, x2, y2 + kage.kMinWidthY);
-        poly.set(3, x1, y1 + kage.kMinWidthY);
+        if(a1 == 0) {
+          poly = new Polygon(6);
+          poly.set(0, x1, y1 - kage.kMinWidthY * 2);
+          poly.set(1, x1 + (x2 - x1) / 4, y1 - kage.kMinWidthY);
+          poly.set(2, x2, y2 - kage.kMinWidthY);
+          poly.set(3, x2, y2 + kage.kMinWidthY);
+          poly.set(4, x1 + (x2 - x1) / 4, y1 + kage.kMinWidthY);
+          poly.set(5, x1 + 1, y1 + kage.kMinWidthY * 2);
+        } else {
+          poly = new Polygon(4);
+          poly.set(0, x1, y1 - kage.kMinWidthY);
+          poly.set(1, x2, y2 - kage.kMinWidthY);
+          poly.set(2, x2, y2 + kage.kMinWidthY);
+          poly.set(3, x1, y1 + kage.kMinWidthY);
+        }
         polygons.push(poly);
         
         //UROKO
