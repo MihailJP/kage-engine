@@ -1502,23 +1502,25 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
       
       if (opt3 == 1) {
         if (tt == 0) {
-            poly3.push(x + ia, y + ib);
+            poly3.push(x + ia * 1.25, y + ib * 1.25);
             poly3.push(x - ia * 1.5, y - ib * 1.5);
-        } else if (tt == Math.min(30, Math.ceil(150 / Math.hypot(x2 - x1, y2 - x1)) * 5)) {
-            poly3.push(x - ia * 1.5, y - ib * 1.5);
-        } else if (tt == Math.min(100, Math.ceil(500 / Math.hypot(x2 - x1, y2 - x1)) * 5)) {
-            poly3.push(x - ia, y - ib);
+        } else if (tt <= 250) {
+            poly3.push(x - ia * (1.5 - tt / 500), y - ib * (1.5 - tt / 500));
+            poly3.reverse();
+            poly3.push(x + ia * (1.25 - tt / 1000), y + ib * (1.25 - tt / 1000));
+            poly3.reverse();
         }
         if (tt < Math.ceil(100 / kage.kRate) * kage.kRate) {tt -= kage.kRate - 5;}
       }
       else if (opt3 == 2) {
         if (tt == 0) {
-            poly3.push(x - ia, y - ib);
+            poly3.push(x - ia * 1.25, y - ib * 1.25);
             poly3.push(x + ia * 1.5, y + ib * 1.5);
-        } else if (tt == Math.min(30, Math.ceil(150 / Math.hypot(x2 - x1, y2 - x1)) * 5)) {
-            poly3.push(x + ia * 1.5, y + ib * 1.5);
-        } else if (tt == Math.min(100, Math.ceil(500 / Math.hypot(x2 - x1, y2 - x1)) * 5)) {
-            poly3.push(x + ia, y + ib);
+        } else if (tt <= 250) {
+            poly3.push(x + ia * (1.5 - tt / 500), y + ib * (1.5 - tt / 500));
+            poly3.reverse();
+            poly3.push(x - ia * (1.25 - tt / 1000), y - ib * (1.25 - tt / 1000));
+            poly3.reverse();
         }
         if (tt < Math.ceil(100 / kage.kRate) * kage.kRate) {tt -= kage.kRate - 5;}
       }
@@ -2478,10 +2480,27 @@ function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2){
       if(a2 % 10 == 3){ x2 = x2 + kage.kWidth * kage.kKakato; }
       
       poly = new Polygon();
-      poly.push(x1, y1 - kWidth);
-      poly.push(x2, y2 - kWidth);
-      poly.push(x2, y2 + kWidth);
-      poly.push(x1, y1 + kWidth);
+      if (a1 % 100 == 0) {
+        poly.push(x1, y1 - kWidth - 2);
+        poly.push(x1 + (x2 - x1) / 6, y1 - kWidth);
+      } else {
+        poly.push(x1, y1 - kWidth);
+      }
+      if (a2 % 100 == 0) {
+        poly.push(x2 - (x2 - x1) / 6, y2 - kWidth);
+        poly.push(x2, y2 - kWidth - 2);
+        poly.push(x2, y2 + kWidth + 2);
+        poly.push(x2 - (x2 - x1) / 6, y2 + kWidth);
+      } else {
+        poly.push(x2, y2 - kWidth);
+        poly.push(x2, y2 + kWidth);
+      }
+      if (a1 % 100 == 0) {
+        poly.push(x1 + (x2 - x1) / 6, y1 + kWidth);
+        poly.push(x1, y1 + kWidth + 2);
+      } else {
+        poly.push(x1, y1 + kWidth);
+      }
       
       polygons.push(poly);
     }
