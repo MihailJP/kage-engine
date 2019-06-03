@@ -347,9 +347,6 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
         cdDrawBezier(kage, polygons, x1, y1, x2, y2, x3, y3, x4, y4, a2, a3);
       }
       break;
-    case 66:
-      cdDrawBezier(kage, polygons, x1, y1, x2, y2, x3, y3, x4, y4, 4000 + a2, a3);
-      break;
     case 7:
       cdDrawLine(kage, polygons, x1, y1, x2, y2, a2, 1);
       cdDrawCurve(kage, polygons, x2, y2, x3, y3, x4, y4, 1 + (a2 - a2 % 1000), a3);
@@ -527,9 +524,6 @@ function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4){
         */
         cdDrawBezier(kage, polygons, x1, y1, x2, y2, x3, y3, x4, y4, a2, a3);
       }
-      break;
-    case 66:
-      cdDrawBezier(kage, polygons, x1, y1, x2, y2, x3, y3, x4, y4, 4000 + a2, a3);
       break;
     case 7:
       cdDrawLine(kage, polygons, x1, y1, x2, y2, a2, 1);
